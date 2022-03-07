@@ -6,15 +6,15 @@ function Login({ history }) {
   const [button, setButton] = useState(true);
   const [password, setPassword] = useState('');
 
-  function validateInputs() {
-    const regexEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-    const MIN_PASSWORD = 6;
-    if (email.match(regexEmail) && parseFloat(password.length) > MIN_PASSWORD) {
-      return setButton(false);
-    }
-    return setButton(true);
-  }
   useEffect(() => {
+    function validateInputs() {
+      const regexEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+      const MIN_PASSWORD = 6;
+      if (email.match(regexEmail) && parseFloat(password.length) > MIN_PASSWORD) {
+        return setButton(false);
+      }
+      return setButton(true);
+    }
     validateInputs();
   }, [password, email]); // verificar depois
 
