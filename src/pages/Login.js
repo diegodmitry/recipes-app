@@ -32,7 +32,7 @@ function Login({ history }) {
     // });
     // localStorage.setItem('token', data.token);
     // const { history } = props;
-    history.push('/explore');
+    history.push('/foods');
   }
 
   return (
