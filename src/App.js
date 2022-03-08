@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Login from './pages/Login';
+// import Login from './pages/Login';
 import Explore from './pages/ExplorePrincipal';
 import Foods from './pages/Foods';
 import Profile from './components/Profile';
@@ -12,11 +12,6 @@ import FavoriteRecipes from './pages/FavoriteRecipes';
 
 function App() {
   return (
-<<<<<<< HEAD
-    <>
-      <div className="meals" />
-    </>
-=======
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={ Login } />
@@ -29,7 +24,6 @@ function App() {
         <Route exact path="/explore/drinks" component={ ExploreDrinks } />
       </Switch>
     </BrowserRouter>
->>>>>>> a0200eb9fd53e3dafb07d024660af05d88ffc55e
   );
 }
 
