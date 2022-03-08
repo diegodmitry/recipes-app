@@ -1,11 +1,12 @@
 import React from 'react';
 
-function Header() {
+function Header({ history }) {
   return (
     <header>
       <button
         type="button"
         data-testid="profile-top-btn"
+        onClick={ () => history.push('/profile') }
       >
         Profile
       </button>
@@ -19,5 +20,9 @@ function Header() {
     </header>
   );
 }
+
+Header.propTypes = {
+  push: PropTypes.func,
+}.isRequired;
 
 export default Header;
