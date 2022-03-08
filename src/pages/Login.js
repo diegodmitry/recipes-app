@@ -31,14 +31,14 @@ function Login({ history }) {
       return setButton(true);
     }
     validateInputs();
-  }, [password, email]); // verificar depoi
+  }, [password, email]);
 
   function handleButton(event) {
     event.preventDefault();
-    history.push('/explore');
+    history.push('/foods');
     localStorage.setItem('mealsToken', 1);
     localStorage.setItem('cocktailsToken', 1);
-    localStorage.setItem('user', email);
+    localStorage.setItem('user', JSON.stringify({ email }));
   }
 
   return (

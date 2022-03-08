@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
 import Explore from './pages/ExplorePrincipal';
@@ -9,7 +8,7 @@ import Profile from './components/Profile';
 import ExploreFoods from './pages/ExploreFoods';
 import ExploreDrinks from './pages/ExploreDrinks';
 import DoneRecipes from './pages/DoneRecipes';
-import FavoriteRecipes from './pages/FavoriteRecipes'
+import FavoriteRecipes from './pages/FavoriteRecipes';
 
 function App() {
   return (
