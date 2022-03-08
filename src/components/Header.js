@@ -2,12 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function Header({ history }) {
+  function handleClickProfile() {
+    history.push('/profile');
+  }
   return (
     <header>
       <button
         type="button"
         data-testid="profile-top-btn"
-        onClick={ () => history.push('/profile') }
+        onClick={ handleClickProfile }
       >
         Profile
       </button>

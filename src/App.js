@@ -8,7 +8,7 @@ import Profile from './components/Profile';
 import ExploreFoods from './pages/ExploreFoods';
 import ExploreDrinks from './pages/ExploreDrinks';
 import DoneRecipes from './pages/DoneRecipes';
-import FavoriteRecipes from './pages/FavoriteRecipes'
+import FavoriteRecipes from './pages/FavoriteRecipes';
 
 function App() {
   return (
