@@ -3,7 +3,8 @@ import React from 'react';
 function Explore() {
   return (
     <section>
-      <h1>Explorar</h1>
+      <button type="button">Explorar Comidas</button>
+      <button type="button">Explorar Bebidas</button>
     </section>
   );
 }
