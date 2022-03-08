@@ -16,18 +16,23 @@ function Login({ history }) {
       return setButton(true);
     }
     validateInputs();
-  }, [password, email]); // verificar depois
+  }, [password, email]); // verificar depoi
 
   function handleButton(event) {
     event.preventDefault();
-    console.log('ok');
+    // console.log('ok');
+    // Requisito 6 e 7
+    localStorage.setItem('mealsToken', 1);
+    localStorage.setItem('cocktailsToken', 1);
+    localStorage.setItem('user', email);
+    // console.log('emial do user:', email);
     // const data = await requestToken();
     // this.setState({ token: data.token }, () => {
     //   callback(this.state);
     // });
     // localStorage.setItem('token', data.token);
     // const { history } = props;
-    history.push('/explore');
+    history.push('/foods');
   }
 
   return (
