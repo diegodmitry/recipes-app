@@ -1,16 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 
-function Header({ history }) {
-  function handleClickProfile() {
-    history.push('/profile');
-  }
+function Header() {
+  const history = useHistory();
   return (
     <header>
       <button
         type="button"
         data-testid="profile-top-btn"
-        onClick={ handleClickProfile }
+        onClick={ () => history.push('/profile') }
       >
         Profile
       </button>
@@ -24,9 +22,5 @@ function Header({ history }) {
     </header>
   );
 }
-
-Header.propTypes = {
-  push: PropTypes.func,
-}.isRequired;
 
 export default Header;

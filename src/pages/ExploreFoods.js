@@ -1,12 +1,16 @@
 import React from 'react';
+import Footer from '../components/Footer';
 
 function ExploreFoods() {
   return (
-    <section>
-      <button type="button" data-testid="explore-by-ingredient">By Ingredient</button>
-      <button type="button" data-testid="explore-by-nationality">By Nationality</button>
-      <button type="button" data-testid="explore-surprise">Surprise Me</button>
-    </section>
+    <div>
+      <section>
+        <button type="button" data-testid="explore-by-ingredient">By Ingredient</button>
+        <button type="button" data-testid="explore-by-nationality">By Nationality</button>
+        <button type="button" data-testid="explore-surprise">Surprise Me</button>
+      </section>
+      <Footer />
+    </div>
   );
 }
 

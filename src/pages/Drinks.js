@@ -2,14 +2,14 @@ import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-function Foods() {
+function Drinks() {
   return (
     <section>
       <Header />
-      <h1>Main Screen Foods</h1>
+      <h1>Main screen drinks</h1>
       <Footer />
     </section>
   );
 }
 
-export default Foods;
+export default Drinks;
