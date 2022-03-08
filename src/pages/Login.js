@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import './style/Login.css';
 
 function Login({ history }) {
   const [email, setEmail] = useState('');
@@ -10,7 +11,10 @@ function Login({ history }) {
     function validateInputs() {
       const regexEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
       const MIN_PASSWORD = 6;
-      if (email.match(regexEmail) && parseFloat(password.length) > MIN_PASSWORD) {
+      if (
+        email.match(regexEmail)
+        && parseFloat(password.length) > MIN_PASSWORD
+      ) {
         return setButton(false);
       }
       return setButton(true);
@@ -20,44 +24,36 @@ function Login({ history }) {
 
   function handleButton(event) {
     event.preventDefault();
-    console.log('ok');
-    // const data = await requestToken();
-    // this.setState({ token: data.token }, () => {
-    //   callback(this.state);
-    // });
-    // localStorage.setItem('token', data.token);
-    // const { history } = props;
     history.push('/explore');
   }
 
   return (
-    <div className="container">
-      <form>
+    <div className="login">
+      <form className="container">
+        <h1 className="text">App de Receitas</h1>
         <label htmlFor="email">
-          Email
           <input
+            className="input"
             id="email"
             name="email"
             type="email"
             value={ email }
             onChange={ ({ target }) => {
               setEmail(target.value);
-              // validateInputs();
             } }
             data-testid="email-input"
             placeholder="Email"
           />
         </label>
-        Senha
         <label htmlFor="password">
           <input
+            className="input"
             id="password"
             name="password"
             type="password"
             value={ password }
             onChange={ ({ target }) => {
               setPassword(target.value);
-              // validateInputs();
             } }
             placeholder="Senha"
             data-testid="password-input"
@@ -68,6 +64,7 @@ function Login({ history }) {
           data-testid="login-submit-btn"
           onClick={ handleButton }
           type="submit"
+          className="btn"
         >
           Enter
         </button>
