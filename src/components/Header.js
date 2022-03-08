@@ -1,24 +1,30 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import profileIcon from '../images/profileIcon.svg';
+import search from '../images/searchIcon.svg';
 
 function Header() {
-  const history = useHistory();
   return (
     <header>
-      <button
-        type="button"
-        data-testid="profile-top-btn"
-        onClick={ () => history.push('/profile') }
+      <Link
+        to="/profile"
       >
-        Profile
-      </button>
+        <img
+          data-testid="profile-top-btn"
+          src={ profileIcon }
+          alt="profile-foto"
+        />
+      </Link>
       <h1 data-testid="page-title">Foods</h1>
-      <button
-        type="button"
-        data-testid="search-top-btn"
+      <Link
+        to="/search"
       >
-        Search
-      </button>
+        <img
+          src={ search }
+          alt="search-bar"
+          data-testid="search-top-btn"
+        />
+      </Link>
     </header>
   );
 }
