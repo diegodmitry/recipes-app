@@ -20,11 +20,14 @@ function Login({ history }) {
       return setButton(true);
     }
     validateInputs();
-  }, [password, email]); // verificar depois
+  }, [password, email]); // verificar depoi
 
   function handleButton(event) {
     event.preventDefault();
     history.push('/explore');
+    localStorage.setItem('mealsToken', 1);
+    localStorage.setItem('cocktailsToken', 1);
+    localStorage.setItem('user', email);
   }
 
   return (
