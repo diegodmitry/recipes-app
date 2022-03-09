@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
 
 function Profile({ history }) {
   return (
     <div>
       <section>
+        <Header />
         <h1>Perfil</h1>
         <h4 data-testid="profile-email">email da pessoa</h4>
         <button
