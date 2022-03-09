@@ -3,13 +3,7 @@ import React from 'react';
 function Search() {
   return (
     <section>
-      <label htmlFor="search">
-        <input
-          type="text"
-          id="search"
-          data-testid="search-input"
-        />
-      </label>
+      <input type="text" data-testid="search-input" />
       <label htmlFor="ingredient">
         Ingredient
         <input

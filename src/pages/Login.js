@@ -33,7 +33,7 @@ function Login({ history }) {
   return (
     <div className="login">
       <form className="container">
-        <h1 className="text">App de Receitas</h1>
+        <h1 className="text">Recipes 4u</h1>
         <label htmlFor="email">
           <input
             className="input"

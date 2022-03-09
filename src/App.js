@@ -13,34 +13,41 @@ import FavoriteRecipes from './pages/FavoriteRecipes';
 import DrinksByIngredients from './pages/DrinksByIngredients';
 import FoodsByIngredients from './pages/FoodsByIngredients';
 import FoodsByNationality from './pages/FoodsByNationality';
+import MyProvider from './context/MyProvider';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={ Login } />
-        <Route exact path="/explore" component={ ExplorePrincipal } />
-        <Route exact path="/foods" component={ Foods } />
-        <Route exact path="/drinks" component={ Drinks } />
-        <Route exact path="/profile" component={ Profile } />
-        {/* <Route exact path="/search" component={ Search } /> */}
-        <Route exact path="/done-recipes" component={ DoneRecipes } />
-        <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
-        <Route exact path="/explore/foods" component={ ExploreFoods } />
-        <Route exact path="/explore/foods/ingredients" component={ FoodsByIngredients } />
-        <Route
-          exact
-          path="/explore/foods/nationalities"
-          component={ FoodsByNationality }
-        />
-        <Route exact path="/explore/drinks" component={ ExploreDrinks } />
-        <Route
-          exact
-          path="/explore/drinks/ingredients"
-          component={ DrinksByIngredients }
-        />
-      </Switch>
-    </BrowserRouter>
+    <MyProvider>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={ Login } />
+          <Route exact path="/explore" component={ ExplorePrincipal } />
+          <Route exact path="/foods" component={ Foods } />
+          <Route exact path="/drinks" component={ Drinks } />
+          <Route exact path="/profile" component={ Profile } />
+          {/* <Route exact path="/search" component={ Search } /> */}
+          <Route exact path="/done-recipes" component={ DoneRecipes } />
+          <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
+          <Route exact path="/explore/foods" component={ ExploreFoods } />
+          <Route
+            exact
+            path="/explore/foods/ingredients"
+            component={ FoodsByIngredients }
+          />
+          <Route
+            exact
+            path="/explore/foods/nationalities"
+            component={ FoodsByNationality }
+          />
+          <Route exact path="/explore/drinks" component={ ExploreDrinks } />
+          <Route
+            exact
+            path="/explore/drinks/ingredients"
+            component={ DrinksByIngredients }
+          />
+        </Switch>
+      </BrowserRouter>
+    </MyProvider>
   );
 }
 
