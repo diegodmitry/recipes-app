@@ -6,7 +6,7 @@ import Header from '../components/Header';
 function ExploreDrinks({ history }) {
   return (
     <section>
-      <Header />
+      <Header item="Drinks" />
       <button
         type="button"
         data-testid="explore-by-ingredient"
