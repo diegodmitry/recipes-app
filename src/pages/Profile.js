@@ -4,6 +4,10 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 function Profile({ history }) {
+  function profileButton() {
+    history.push('/');
+    localStorage.clear();
+  }
   return (
     <div>
       <section>
@@ -27,7 +31,7 @@ function Profile({ history }) {
         <button
           type="button"
           data-testid="profile-logout-btn"
-          onClick={ () => history.push('/') } // limpar todas as chaves do localStorage ao clicar nesse botao
+          onClick={ profileButton } // limpar todas as chaves do localStorage ao clicar nesse botao
         >
           Logout
         </button>
