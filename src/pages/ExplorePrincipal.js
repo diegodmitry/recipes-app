@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 
-function Explore({ history }) {
+function ExplorePrincipal({ history }) {
   return (
     <section>
       <Header />
@@ -26,8 +26,8 @@ function Explore({ history }) {
   );
 }
 
-Explore.propTypes = {
+ExplorePrincipal.propTypes = {
   push: PropTypes.func,
 }.isRequired;
 
-export default Explore;
+export default ExplorePrincipal;
