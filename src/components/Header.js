@@ -27,7 +27,6 @@ function Header() {
   const { location } = useHistory();
   const { pathname } = location;
   function handleTitle() {
-    console.log(pathname);
     let title = 'Foods';
     if (pathname === '/explore') {
       title = 'Explore';
