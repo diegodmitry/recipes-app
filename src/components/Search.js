@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import MyContext from '../context/MyContext';
 
 function Search() {
+  const { setInputValue, inputValue,
+    setLoading } = useContext(MyContext);
   return (
     <section>
-      <input type="text" data-testid="search-input" />
+      <input
+        type="text"
+        data-testid="search-input"
+        value={ inputValue }
+        onChange={ ({ target }) => setInputValue(target.value) }
+      />
       <label htmlFor="ingredient">
         Ingredient
         <input
@@ -11,6 +19,7 @@ function Search() {
           name="ingredient"
           id="ingredient"
           data-testid="ingredient-search-radio"
+          onClick={ () => setLoading(true) }
         />
       </label>
       <label htmlFor="name">
