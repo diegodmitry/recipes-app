@@ -1,9 +1,38 @@
 import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
+import { ApiIngredients, Apiname, ApifirstLetter } from '../services/ApiIngredients';
 
 function Search() {
   const { setInputValue, inputValue,
-    setLoading } = useContext(MyContext);
+    setIngredients, setCurrentFilter, currentFilter } = useContext(MyContext);
+
+  function ingredientSelect() {
+    setCurrentFilter('ingridients');
+  }
+  function nameSelect() {
+    setCurrentFilter('name');
+  }
+  function firstLetterSelect() {
+    setCurrentFilter('firstLetter');
+  }
+  async function searchButton() {
+    if (currentFilter === 'ingridients') {
+      const result = await ApiIngredients(inputValue);
+      return setIngredients(result);
+    }
+    if (currentFilter === 'name') {
+      const result = await Apiname(inputValue);
+      return setIngredients(result);
+    }
+    if (currentFilter === 'firstLetter' && inputValue.length > 1) {
+      return global.alert('Your search must have only 1 (one) character');
+    }
+    if (currentFilter === 'firstLetter') {
+      const result = await ApifirstLetter(inputValue);
+      return setIngredients(result);
+    }
+    return console.log('oi');
+  }
   return (
     <section>
       <input
@@ -19,7 +48,7 @@ function Search() {
           name="ingredient"
           id="ingredient"
           data-testid="ingredient-search-radio"
-          onClick={ () => setLoading(true) }
+          onClick={ ingredientSelect }
         />
       </label>
       <label htmlFor="name">
@@ -29,6 +58,7 @@ function Search() {
           id="name"
           name="name"
           data-testid="name-search-radio"
+          onClick={ nameSelect }
         />
       </label>
       <label htmlFor="first-letter">
@@ -38,11 +68,13 @@ function Search() {
           id="first-letter"
           name="first-letter"
           data-testid="first-letter-search-radio"
+          onClick={ firstLetterSelect }
         />
       </label>
       <button
         type="button"
         data-testid="exec-search-btn"
+        onClick={ searchButton }
       >
         Search
       </button>
