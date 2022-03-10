@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-import React from 'react';
-
-const Login = () => {
-  return (
-    <>
-    Página de Login
-    </>
-  );
-};
-=======
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './style/Login.css';
@@ -44,7 +33,7 @@ function Login({ history }) {
   return (
     <div className="login">
       <form className="container">
-        <h1 className="text">App de Receitas</h1>
+        <h1 className="text">Recipes 4u</h1>
         <label htmlFor="email">
           <input
             className="input"
@@ -90,6 +79,5 @@ function Login({ history }) {
 Login.propTypes = {
   push: PropTypes.func,
 }.isRequired;
->>>>>>> a0200eb9fd53e3dafb07d024660af05d88ffc55e
 
 export default Login;
