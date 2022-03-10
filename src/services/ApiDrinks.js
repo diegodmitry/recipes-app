@@ -30,3 +30,15 @@ export const ApiDrinksFirstLetter = async (first) => {
     return error;
   }
 };
+
+export const ApiCategoryDrink = async () => {
+  const url = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    // console.log(data.drinks);
+    return data.drinks;
+  } catch (error) {
+    return error;
+  }
+};
