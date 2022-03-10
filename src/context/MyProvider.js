@@ -17,7 +17,6 @@ function MyProvider({ children }) {
   const [ingredients, setIngredients] = useState([]);
   const [loading, setLoading] = useState(false);
   const NUMBER_ONE = 1;
-  // const NUMBER_ELEVEN = 11;
   const NUMBER_TWELVE = 12;
   const firstLetter = 'firstLetter';
   const stringName = 'name';
@@ -49,7 +48,6 @@ function MyProvider({ children }) {
       const filter = result.slice(0, NUMBER_TWELVE);
       return (setIngredients(filter));
     }
-    console.log(result);
   }
 
   async function handleCheckFood() {

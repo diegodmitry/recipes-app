@@ -1,10 +1,20 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import MyContext from '../context/MyContext';
+import { ApiDrinksName } from '../services/ApiDrinks';
 
 function Drinks() {
-  const { ingredients } = useContext(MyContext);
+  const NUMBER_TWELVE = 12;
+  const { ingredients, setIngredients } = useContext(MyContext);
+  useEffect(() => {
+    async function initialFetch() {
+      const result = await ApiDrinksName('');
+      const filter = result.slice(0, NUMBER_TWELVE);
+      setIngredients(filter);
+    }
+    initialFetch();
+  }, [setIngredients]);
   return (
     <section>
       <Header />
