@@ -3,7 +3,6 @@ export const ApiMealsIngredient = async (ingredient) => {
   try {
     const response = await fetch(linkIngredient);
     const data = await response.json();
-    console.log(data);
     return data.meals;
   } catch (error) {
     return error;
@@ -15,7 +14,7 @@ export const ApiMealsFirstLetter = async (first) => {
   try {
     const response = await fetch(linkFirstLetter);
     const data = await response.json();
-    return data;
+    return data.meals;
   } catch (error) {
     return error;
   }
@@ -26,7 +25,7 @@ export const ApiMealsName = async (names) => {
   try {
     const response = await fetch(linkName);
     const data = await response.json();
-    return data;
+    return data.meals;
   } catch (error) {
     return error;
   }
