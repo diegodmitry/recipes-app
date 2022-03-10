@@ -1,13 +1,16 @@
 import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
-import { ApiIngredients, Apiname, ApifirstLetter } from '../services/ApiIngredients';
+import { ApiMealsIngredient,
+  ApiMealsName,
+  ApiMealsFirstLetter,
+} from '../services/ApiIngredients';
 
 function Search() {
   const { setInputValue, inputValue,
     setIngredients, setCurrentFilter, currentFilter } = useContext(MyContext);
 
   function ingredientSelect() {
-    setCurrentFilter('ingridients');
+    setCurrentFilter('ingredients');
   }
   function nameSelect() {
     setCurrentFilter('name');
@@ -16,19 +19,19 @@ function Search() {
     setCurrentFilter('firstLetter');
   }
   async function searchButton() {
-    if (currentFilter === 'ingridients') {
-      const result = await ApiIngredients(inputValue);
+    if (currentFilter === 'ingredients') {
+      const result = await ApiMealsIngredient(inputValue);
       return setIngredients(result);
     }
     if (currentFilter === 'name') {
-      const result = await Apiname(inputValue);
+      const result = await ApiMealsName(inputValue);
       return setIngredients(result);
     }
     if (currentFilter === 'firstLetter' && inputValue.length > 1) {
       return global.alert('Your search must have only 1 (one) character');
     }
     if (currentFilter === 'firstLetter') {
-      const result = await ApifirstLetter(inputValue);
+      const result = await ApiMealsFirstLetter(inputValue);
       return setIngredients(result);
     }
     return console.log('oi');
