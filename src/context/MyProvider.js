@@ -8,7 +8,7 @@ function MyProvider({ children }) {
   const [ingredients, setIngredients] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  console.log(ingredients);
+  // console.log(ingredients);
 
   const value = {
     setIngredients,
