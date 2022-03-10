@@ -30,6 +30,10 @@ function Login({ history }) {
     localStorage.setItem('user', JSON.stringify({ email }));
   }
 
+  function handleEmail({ target }) {
+    setEmail(target.value);
+  }
+
   return (
     <div className="login">
       <form className="container">
@@ -41,9 +45,7 @@ function Login({ history }) {
             name="email"
             type="email"
             value={ email }
-            onChange={ ({ target }) => {
-              setEmail(target.value);
-            } }
+            onChange={ handleEmail }
             data-testid="email-input"
             placeholder="Email"
           />

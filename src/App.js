@@ -14,16 +14,20 @@ import DrinksByIngredients from './pages/DrinksByIngredients';
 import FoodsByIngredients from './pages/FoodsByIngredients';
 import FoodsByNationality from './pages/FoodsByNationality';
 import MyProvider from './context/MyProvider';
+import RecipeDetailsFoods from './pages/RecipeDetailsFoods';
+import RecipeDetailsDrinks from './pages/RecipeDetailsDrinks';
 
 function App() {
   return (
-    <MyProvider>
-      <BrowserRouter>
-        <Switch>
+    <BrowserRouter>
+      <Switch>
+        <MyProvider>
           <Route exact path="/" component={ Login } />
           <Route exact path="/explore" component={ ExplorePrincipal } />
           <Route exact path="/foods" component={ Foods } />
+          <Route exact path="/foods/:id" component={ RecipeDetailsFoods } />
           <Route exact path="/drinks" component={ Drinks } />
+          <Route exact path="/drinks/:id" component={ RecipeDetailsDrinks } />
           <Route exact path="/profile" component={ Profile } />
           <Route exact path="/done-recipes" component={ DoneRecipes } />
           <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
@@ -44,9 +48,9 @@ function App() {
             path="/explore/drinks/ingredients"
             component={ DrinksByIngredients }
           />
-        </Switch>
-      </BrowserRouter>
-    </MyProvider>
+        </MyProvider>
+      </Switch>
+    </BrowserRouter>
   );
 }
 

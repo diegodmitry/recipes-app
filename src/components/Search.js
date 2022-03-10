@@ -1,41 +1,14 @@
 import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
-import { ApiMealsIngredient,
-  ApiMealsName,
-  ApiMealsFirstLetter,
-} from '../services/ApiIngredients';
 
 function Search() {
   const { setInputValue, inputValue,
-    setIngredients, setCurrentFilter, currentFilter } = useContext(MyContext);
+    ingredientSelect,
+    nameSelect,
+    firstLetterSelect,
+    searchButton,
+  } = useContext(MyContext);
 
-  function ingredientSelect() {
-    setCurrentFilter('ingredients');
-  }
-  function nameSelect() {
-    setCurrentFilter('name');
-  }
-  function firstLetterSelect() {
-    setCurrentFilter('firstLetter');
-  }
-  async function searchButton() {
-    if (currentFilter === 'ingredients') {
-      const result = await ApiMealsIngredient(inputValue);
-      return setIngredients(result);
-    }
-    if (currentFilter === 'name') {
-      const result = await ApiMealsName(inputValue);
-      return setIngredients(result);
-    }
-    if (currentFilter === 'firstLetter' && inputValue.length > 1) {
-      return global.alert('Your search must have only 1 (one) character');
-    }
-    if (currentFilter === 'firstLetter') {
-      const result = await ApiMealsFirstLetter(inputValue);
-      return setIngredients(result);
-    }
-    return console.log('oi');
-  }
   return (
     <section>
       <input
@@ -48,7 +21,7 @@ function Search() {
         Ingredient
         <input
           type="radio"
-          name="ingredient"
+          name="radiosButtons"
           id="ingredient"
           data-testid="ingredient-search-radio"
           onClick={ ingredientSelect }
@@ -59,7 +32,7 @@ function Search() {
         <input
           type="radio"
           id="name"
-          name="name"
+          name="radiosButtons"
           data-testid="name-search-radio"
           onClick={ nameSelect }
         />
@@ -69,7 +42,7 @@ function Search() {
         <input
           type="radio"
           id="first-letter"
-          name="first-letter"
+          name="radiosButtons"
           data-testid="first-letter-search-radio"
           onClick={ firstLetterSelect }
         />
