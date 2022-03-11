@@ -37,7 +37,6 @@ function Foods() {
     setCurrentFilter(target.name);
     return setIngredients(categoryFilter);
   }
-
   return (
     <section>
       <Header />
@@ -69,8 +68,6 @@ function Foods() {
             key={ food.idMeal }
             data-testid={ `${index}-recipe-card` }
           >
-            {console.log(ingredients)}
-            {console.log(food.idMeal)}
             <Link
               to={ `/foods/${food.idMeal}` }
             >
