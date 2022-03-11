@@ -1,12 +1,17 @@
 import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import MyContext from '../context/MyContext';
 
 function RecipeDetailsDrinks() {
   const { ingredients } = useContext(MyContext);
+  const history = useHistory();
+  const { location: { pathname } } = history;
+  const pathNameId = pathname.split('/drinks/')[1];
+  const foodFiltered = ingredients.filter((item) => item.idDrink === pathNameId);
   return (
     <section>
       <h1>Recipe details Drinks</h1>
-      {ingredients.map((foods, index) => (
+      {foodFiltered.map((foods, index) => (
         <div
           className="card"
           key={ foods.idDrink }

@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import MyContext from '../context/MyContext';
@@ -68,13 +69,17 @@ function Drinks() {
             key={ drink.idDrink }
             data-testid={ `${index}-recipe-card` }
           >
-            <img
-              data-testid={ `${index}-card-img` }
-              src={ drink.strDrinkThumb }
-              alt="ImageCard"
-              width="200px"
-              height="200px"
-            />
+            <Link
+              to={ `/drinks/${drink.idDrink}` }
+            >
+              <img
+                data-testid={ `${index}-card-img` }
+                src={ drink.strDrinkThumb }
+                alt="ImageCard"
+                width="200px"
+                height="200px"
+              />
+            </Link>
             <h4 data-testid={ `${index}-card-name` }><b>{drink.strDrink}</b></h4>
             <p>{ drink.strAlcoholic }</p>
           </div>)) }

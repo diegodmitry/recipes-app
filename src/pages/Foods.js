@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import MyContext from '../context/MyContext';
@@ -68,13 +69,19 @@ function Foods() {
             key={ food.idMeal }
             data-testid={ `${index}-recipe-card` }
           >
-            <img
-              src={ food.strMealThumb }
-              alt="ImageCard"
-              width="200px"
-              height="200px"
-              data-testid={ `${index}-card-img` }
-            />
+            {console.log(ingredients)}
+            {console.log(food.idMeal)}
+            <Link
+              to={ `/foods/${food.idMeal}` }
+            >
+              <img
+                src={ food.strMealThumb }
+                alt="ImageCard"
+                width="200px"
+                height="200px"
+                data-testid={ `${index}-card-img` }
+              />
+            </Link>
             <h4 data-testid={ `${index}-card-name` }>{food.strMeal}</h4>
           </div>)) }
       <Footer />
