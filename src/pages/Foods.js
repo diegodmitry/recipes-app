@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import MyContext from '../context/MyContext';
@@ -36,7 +37,6 @@ function Foods() {
     setCurrentFilter(target.name);
     return setIngredients(categoryFilter);
   }
-
   return (
     <section>
       <Header />
@@ -68,13 +68,15 @@ function Foods() {
             key={ food.idMeal }
             data-testid={ `${index}-recipe-card` }
           >
-            <img
-              src={ food.strMealThumb }
-              alt="ImageCard"
-              width="200px"
-              height="200px"
-              data-testid={ `${index}-card-img` }
-            />
+            <Link to={ `/foods/${ingredients[index].idMeal}` }>
+              <img
+                src={ food.strMealThumb }
+                alt="ImageCard"
+                width="200px"
+                height="200px"
+                data-testid={ `${index}-card-img` }
+              />
+            </Link>
             <h4 data-testid={ `${index}-card-name` }>{food.strMeal}</h4>
           </div>)) }
       <Footer />

@@ -1,9 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import MyContext from '../context/MyContext';
+// <<<<<<< main-group-req-33-em-diante
+// import { ApiDrinksName,
+//   ApiAllCategoryDrink,
+//   ApiByCategoryDrink,
+// } from '../services/ApiDrinks';
+// =======
 import { ApiDrinksName, ApiCategoryDrink, ApiAllCategoryDrink }
 from '../services/ApiDrinks';
+// >>>>>>> main-group-25
 
 function Drinks() {
   const NUMBER_TWELVE = 12;
@@ -13,7 +21,7 @@ function Drinks() {
   const [currentFilter, setcurrentFilter] = useState([]);
   useEffect(() => {
     async function getCategoryDrink() {
-      const result = await ApiCategoryDrink();
+      const result = await ApiAllCategoryDrink();
       const filter = result.slice(0, NUMBER_FIVE);
       setDrinkCategory(filter);
     }
@@ -26,6 +34,13 @@ function Drinks() {
     getCategoryDrink();
   }, [setIngredients]);
 
+// <<<<<<< main-group-req-33-em-diante
+//   async function handleClickCategory({ target }) {
+//     const result = await ApiByCategoryDrink(target.value);
+//     // console.log(result);
+//     console.log(target.value);
+//     return result;
+// =======
   async function handleClick({ target }) {
     if (target.name === 'All' || target.name === currentFilter) {
       const result = await ApiDrinksName('');
@@ -55,6 +70,7 @@ function Drinks() {
             data-testid={ `${item.strCategory}-category-filter` }
             name={ item.strCategory }
             key={ item.strCategory }
+            data-testid={ `${item.strCategory}-category-filter` }
             type="button"
             onClick={ handleClick }
           >
@@ -68,13 +84,18 @@ function Drinks() {
             key={ drink.idDrink }
             data-testid={ `${index}-recipe-card` }
           >
-            <img
-              data-testid={ `${index}-card-img` }
-              src={ drink.strDrinkThumb }
-              alt="ImageCard"
-              width="200px"
-              height="200px"
-            />
+            <Link to={ `/drinks/${ingredients[index].idDrink}` }>
+              <img
+                data-testid={ `${index}-card-img` }
+                src={ drink.strDrinkThumb }
+                alt="ImageCard"
+                width="200px"
+                height="200px"
+              />
+            </Link>
+            <p>
+              { drink.strCategory }
+            </p>
             <h4 data-testid={ `${index}-card-name` }><b>{drink.strDrink}</b></h4>
             <p>{ drink.strAlcoholic }</p>
           </div>)) }
