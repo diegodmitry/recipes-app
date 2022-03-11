@@ -22,6 +22,8 @@ function Profile({ history }) {
         <h4
           data-testid="profile-email"
         >
+          Your Email:
+          { ' ' }
           {localStorage.getItem('user') ? getEMail() : 'Email não encontrado'}
         </h4>
         <button
