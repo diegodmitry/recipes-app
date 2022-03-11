@@ -2,8 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import MyContext from '../context/MyContext';
-import { ApiDrinksName } from '../services/ApiDrinks';
-import { ApiCategoryFood } from '../services/ApiMeals';
+import { ApiDrinksName, ApiCategoryDrink } from '../services/ApiDrinks';
 
 function Drinks() {
   const NUMBER_TWELVE = 12;
@@ -12,7 +11,7 @@ function Drinks() {
   const [drinkCategory, setDrinkCategory] = useState([]);
   useEffect(() => {
     async function getCategoryDrink() {
-      const result = await ApiCategoryFood();
+      const result = await ApiCategoryDrink();
       const filter = result.slice(0, NUMBER_FIVE);
       setDrinkCategory(filter);
     }
@@ -58,7 +57,5 @@ function Drinks() {
     </section>
   );
 }
-
-// Tutu seu lindo vc caiu!!! kkk
 
 export default Drinks;
