@@ -68,7 +68,9 @@ function Foods() {
             key={ food.idMeal }
             data-testid={ `${index}-recipe-card` }
           >
-            <Link to={ `/foods/${ingredients[index].idMeal}` }>
+            <Link
+              to={ `/foods/${food.idMeal}` }
+            >
               <img
                 src={ food.strMealThumb }
                 alt="ImageCard"

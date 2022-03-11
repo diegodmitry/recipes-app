@@ -8,7 +8,6 @@ function RecipeDetailsFoods() {
   const { location: { pathname } } = history;
   const pathNameId = pathname.split('/foods/')[1];
   const foodFiltered = ingredients.filter((item) => item.idMeal === pathNameId);
-
   return (
     <section>
       <h1>Recipe details Foods</h1>
