@@ -8,12 +8,22 @@ function Profile({ history }) {
     history.push('/');
     localStorage.clear();
   }
+  const getEMail = () => {
+    const emailUser = JSON.parse(localStorage.getItem('user'));
+    return (
+      emailUser.email
+    );
+  };
+
   return (
     <div>
       <section>
         <Header />
-        <h1>Perfil</h1>
-        <h4 data-testid="profile-email">email da pessoa</h4>
+        <h4
+          data-testid="profile-email"
+        >
+          {localStorage.getItem('user') ? getEMail() : 'Email não encontrado'}
+        </h4>
         <button
           type="button"
           data-testid="profile-done-btn"
