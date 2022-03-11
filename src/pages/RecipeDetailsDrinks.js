@@ -7,18 +7,12 @@ function RecipeDetailsDrinks() {
   const history = useHistory();
   const { location: { pathname } } = history;
   const pathNameId = pathname.split('/drinks/')[1];
-  const drinkFiltered = ingredients.filter((item) => item.idDrink === pathNameId);
-
-  // console.log(ingredients);
-  // console.log(pathNameId);
-  // console.log(ingredients[0].idDrink);
-
-  // console.log(elFiltered[0]);
-  // console.log(elFiltered);
+  const foodFiltered = ingredients.filter((item) => item.idDrink === pathNameId);
   return (
     <section>
       <h1>Recipe details Drinks</h1>
-      {drinkFiltered.map((foods, index) => (
+      {foodFiltered.map((foods, index) => (
+
         <div
           className="card"
           key={ foods.idDrink }
