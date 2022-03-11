@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import MyContext from '../context/MyContext';
 
-import { ApiDrinksName, ApiCategoryDrink, ApiAllCategoryDrink }
+import { ApiDrinksName, ApiAllCategoryDrink, ApiByCategoryDrink }
 from '../services/ApiDrinks';
 
 function Drinks() {
@@ -28,20 +28,13 @@ function Drinks() {
     getCategoryDrink();
   }, [setIngredients]);
 
-// <<<<<<< main-group-req-33-em-diante
-//   async function handleClickCategory({ target }) {
-//     const result = await ApiByCategoryDrink(target.value);
-//     // console.log(result);
-//     console.log(target.value);
-//     return result;
-// =======
   async function handleClick({ target }) {
     if (target.name === 'All' || target.name === currentFilter) {
       const result = await ApiDrinksName('');
       const categoryFilter = result.slice(0, NUMBER_TWELVE);
       return setIngredients(categoryFilter);
     }
-    const result = await ApiAllCategoryDrink(target.name);
+    const result = await ApiByCategoryDrink(target.name);
     const categoryFilter = result.slice(0, NUMBER_TWELVE);
     setcurrentFilter(target.name);
     return setIngredients(categoryFilter);
@@ -64,7 +57,6 @@ function Drinks() {
             data-testid={ `${item.strCategory}-category-filter` }
             name={ item.strCategory }
             key={ item.strCategory }
-            data-testid={ `${item.strCategory}-category-filter` }
             type="button"
             onClick={ handleClick }
           >

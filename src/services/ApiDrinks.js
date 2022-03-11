@@ -43,7 +43,7 @@ export const ApiAllCategoryDrink = async () => {
   }
 };
 
-export const ApiAllCategoryDrink = async (category) => {
+export const ApiByCategoryDrink = async (category) => {
   const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`;
   try {
     const response = await fetch(url);
@@ -54,16 +54,16 @@ export const ApiAllCategoryDrink = async (category) => {
   }
 };
 
-export const ApiByCategoryDrink = async (category) => {
-  // const url = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
-  // www.thecocktaildb.com/api/json/v1/1/filter.php?c=Ordinary_Drink
-  const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`;
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data);
-    return data.drinks;
-  } catch (error) {
-    return error;
-  }
-};
+// export const ApiByCategoryDrink = async (category) => {
+//   // const url = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
+//   // www.thecocktaildb.com/api/json/v1/1/filter.php?c=Ordinary_Drink
+//   const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`;
+//   try {
+//     const response = await fetch(url);
+//     const data = await response.json();
+//     console.log(data);
+//     return data.drinks;
+//   } catch (error) {
+//     return error;
+//   }
+// };
