@@ -2,13 +2,15 @@ import React, { useContext, useEffect, useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import MyContext from '../context/MyContext';
-import { ApiDrinksName, ApiCategoryDrink } from '../services/ApiDrinks';
+import { ApiDrinksName, ApiCategoryDrink, ApiAllCategoryDrink }
+from '../services/ApiDrinks';
 
 function Drinks() {
   const NUMBER_TWELVE = 12;
   const NUMBER_FIVE = 5;
   const { ingredients, setIngredients } = useContext(MyContext);
   const [drinkCategory, setDrinkCategory] = useState([]);
+  const [currentFilter, setcurrentFilter] = useState([]);
   useEffect(() => {
     async function getCategoryDrink() {
       const result = await ApiCategoryDrink();
@@ -23,15 +25,38 @@ function Drinks() {
     initialFetch();
     getCategoryDrink();
   }, [setIngredients]);
+
+  async function handleClick({ target }) {
+    if (target.name === 'All' || target.name === currentFilter) {
+      const result = await ApiDrinksName('');
+      const categoryFilter = result.slice(0, NUMBER_TWELVE);
+      return setIngredients(categoryFilter);
+    }
+    const result = await ApiAllCategoryDrink(target.name);
+    const categoryFilter = result.slice(0, NUMBER_TWELVE);
+    setcurrentFilter(target.name);
+    return setIngredients(categoryFilter);
+  }
+
   return (
     <section>
       <Header />
+      <button
+        data-testid="All-category-filter"
+        name="All"
+        type="button"
+        onClick={ handleClick }
+      >
+        All
+      </button>
       {drinkCategory
         .map((item) => (
           <button
             data-testid={ `${item.strCategory}-category-filter` }
+            name={ item.strCategory }
             key={ item.strCategory }
             type="button"
+            onClick={ handleClick }
           >
             { item.strCategory }
           </button>))}

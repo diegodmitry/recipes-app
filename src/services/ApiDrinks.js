@@ -36,7 +36,17 @@ export const ApiCategoryDrink = async () => {
   try {
     const response = await fetch(url);
     const data = await response.json();
-    // console.log(data.drinks);
+    return data.drinks;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const ApiAllCategoryDrink = async (category) => {
+  const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`;
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
     return data.drinks;
   } catch (error) {
     return error;
