@@ -52,3 +52,14 @@ export const ApiAllCategoryFood = async (category) => {
     return error;
   }
 };
+
+export const ApiFoodById = async (id) => {
+  const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data.meals;
+  } catch (error) {
+    return error;
+  }
+};

@@ -1,37 +1,43 @@
-import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
-import MyContext from '../context/MyContext';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { ApiDrinkById } from '../services/ApiDrinks';
 
 function RecipeDetailsDrinks() {
-  const { ingredients } = useContext(MyContext);
-  const history = useHistory();
-  const { location: { pathname } } = history;
-  const pathNameId = pathname.split('/drinks/')[1];
-  const foodFiltered = ingredients.filter((item) => item.idDrink === pathNameId);
+  const [drinkDetails, setDrinkDetails] = useState([]);
+  const { id } = useParams();
+  console.log(id);
+
+  useEffect(() => {
+    async function getId() {
+      const result = await ApiDrinkById(id);
+      return setDrinkDetails(result);
+    }
+    getId();
+  }, [id]);
   return (
     <section>
       <h1>Recipe details Drinks</h1>
-      {foodFiltered.map((foods, index) => (
+      {drinkDetails.map((item, index) => (
 
         <div
           className="card"
-          key={ foods.idDrink }
+          key={ item.idDrink }
         >
           <h4 data-testid="recipe-title">
-            {foods.strDrink}
+            {item.strDrink}
           </h4>
           <button type="button" data-testid="share-btn">Compartilhar</button>
           <button type="button" ddata-testid="favorite-btn">Compartilhar</button>
-          <p data-testid="recipe-category">{ foods.strCategory }</p>
+          <p data-testid="recipe-category">{ item.strCategory }</p>
           <img
-            src={ foods.strDrinkThumb }
+            src={ item.strDrinkThumb }
             alt="ImageCard"
             width="200px"
             height="200px"
             data-testid="recipe-photo"
           />
           <p data-testid="instructions">
-            { foods.strInstructions }
+            { item.strInstructions }
           </p>
           <iframe title="video" data-testid="video" src="">VIdeo</iframe>
           <div>
@@ -43,106 +49,107 @@ function RecipeDetailsDrinks() {
             <p
               data-testid={ `${index}-ingredient-name-and-measure` }
             >
-              { foods.strIngredient1 }
+              { item.strIngredient1 }
             </p>
             <p
               data-testid={ `${index}-ingredient-name-and-measure` }
             >
-              { foods.strIngredient2 }
+              { item.strIngredient2 }
             </p>
             <p
               data-testid={ `${index}-ingredient-name-and-measure` }
             >
-              { foods.strIngredient3 }
+              { item.strIngredient3 }
             </p>
             <p
               data-testid={ `${index}-ingredient-name-and-measure` }
             >
-              { foods.strIngredient4 }
+              { item.strIngredient4 }
             </p>
             <p
               data-testid={ `${index}-ingredient-name-and-measure` }
             >
-              { foods.strIngredient5 }
+              { item.strIngredient5 }
             </p>
             <p
               data-testid={ `${index}-ingredient-name-and-measure` }
             >
-              { foods.strIngredient6 }
+              { item.strIngredient6 }
             </p>
             <p
               data-testid={ `${index}-ingredient-name-and-measure` }
             >
-              { foods.strIngredient7 }
+              { item.strIngredient7 }
             </p>
             <p
               data-testid={ `${index}-ingredient-name-and-measure` }
             >
-              { foods.strIngredient8 }
+              { item.strIngredient8 }
             </p>
             <p
               data-testid={ `${index}-ingredient-name-and-measure` }
             >
-              { foods.strIngredient9 }
+              { item.strIngredient9 }
             </p>
             <p
               data-testid={ `${index}-ingredient-name-and-measure` }
             >
-              { foods.strIngredient10 }
+              { item.strIngredient10 }
             </p>
             <p
               data-testid={ `${index}-ingredient-name-and-measure` }
             >
-              { foods.strIngredient11 }
+              { item.strIngredient11 }
             </p>
             <p
               data-testid={ `${index}-ingredient-name-and-measure` }
             >
-              { foods.strIngredient12 }
+              { item.strIngredient12 }
             </p>
             <p
               data-testid={ `${index}-ingredient-name-and-measure` }
             >
-              { foods.strIngredient13 }
+              { item.strIngredient13 }
             </p>
             <p
               data-testid={ `${index}-ingredient-name-and-measure` }
             >
-              { foods.strIngredient14 }
+              { item.strIngredient14 }
             </p>
             <p
               data-testid={ `${index}-ingredient-name-and-measure` }
             >
-              { foods.strIngredient15 }
+              { item.strIngredient15 }
             </p>
             <p
               data-testid={ `${index}-ingredient-name-and-measure` }
             >
-              { foods.strIngredient16 }
+              { item.strIngredient16 }
             </p>
             <p
               data-testid={ `${index}-ingredient-name-and-measure` }
             >
-              { foods.strIngredient17 }
+              { item.strIngredient17 }
             </p>
             <p
               data-testid={ `${index}-ingredient-name-and-measure` }
             >
-              { foods.strIngredient18 }
+              { item.strIngredient18 }
             </p>
             <p
               data-testid={ `${index}-ingredient-name-and-measure` }
             >
-              { foods.strIngredient19 }
+              { item.strIngredient19 }
             </p>
             <p
               data-testid={ `${index}-ingredient-name-and-measure` }
             >
-              { foods.strIngredient20 }
+              { item.strIngredient20 }
             </p>
           </div>
 
           <button type="button" data-testid="start-recipe-btn">Start Recipe</button>
+          <button type="button" data-testid="favorite-btn">Favorite</button>
         </div>
       ))}
     </section>

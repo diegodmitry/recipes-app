@@ -1,17 +1,24 @@
-import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
-import MyContext from '../context/MyContext';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { ApiFoodById } from '../services/ApiMeals';
 
 function RecipeDetailsFoods() {
-  const { ingredients } = useContext(MyContext);
-  const history = useHistory();
-  const { location: { pathname } } = history;
-  const pathNameId = pathname.split('/foods/')[1];
-  const foodFiltered = ingredients.filter((item) => item.idMeal === pathNameId);
+  const [foodDetail, setFoodDetail] = useState([]);
+  const { id } = useParams();
+  console.log(id);
+
+  useEffect(() => {
+    async function getId() {
+      const result = await ApiFoodById(id);
+      return setFoodDetail(result);
+    }
+    getId();
+  }, [id]);
+  console.log(foodDetail);
   return (
     <section>
       <h1>Recipe details Foods</h1>
-      {foodFiltered.map((foods, index) => (
+      {foodDetail.map((foods, index) => (
         <div
           className="card"
           key={ foods.idMeal }
