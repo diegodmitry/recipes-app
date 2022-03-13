@@ -5,9 +5,9 @@ function DoneRecipes() {
   return (
     <section>
       <Header />
-      <button type="button">All</button>
-      <button type="button">Food</button>
-      <button type="button">Drinks</button>
+      <button type="button" data-testid="filter-by-all-btn">All</button>
+      <button type="button" data-testid="filter-by-food-btn">Food</button>
+      <button type="button" data-testid="filter-by-drink-btn">Drinks</button>
     </section>
   );
 }

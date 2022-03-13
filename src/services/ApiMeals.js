@@ -63,3 +63,14 @@ export const ApiFoodById = async (id) => {
     return error;
   }
 };
+
+export const ApiFoodRecomendation = async () => {
+  const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data.meals;
+  } catch (error) {
+    return error;
+  }
+};
