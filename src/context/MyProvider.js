@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import MyContext from './MyContext';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import { ApiMealsIngredient,
   ApiMealsName,
   ApiMealsFirstLetter,
@@ -16,6 +18,7 @@ function MyProvider({ children }) {
   const [currentFilter, setCurrentFilter] = useState('');
   const [ingredients, setIngredients] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isFav, setIsFav] = useState(true);
   const NUMBER_ONE = 1;
   const NUMBER_TWELVE = 12;
   const firstLetter = 'firstLetter';
@@ -33,6 +36,33 @@ function MyProvider({ children }) {
   }
   function firstLetterSelect() {
     setCurrentFilter(firstLetter);
+  }
+
+  function btnLike() {
+    return (
+      isFav ? (
+        <button
+          type="button"
+          onClick={ () => setIsFav(false) }
+        >
+          <img
+            data-testid="favorite-btn"
+            alt="favorite"
+            src={ whiteHeartIcon }
+          />
+        </button>)
+        : (
+          <button
+            type="button"
+            onClick={ () => setIsFav(true) }
+          >
+            <img
+              alt="favorite"
+              data-testid="favorite-btn"
+              src={ blackHeartIcon }
+            />
+          </button>)
+    );
   }
 
   async function handleCheckDrink() {
@@ -109,6 +139,7 @@ function MyProvider({ children }) {
   }
 
   const value = {
+    btnLike,
     ingredientSelect,
     nameSelect,
     firstLetterSelect,

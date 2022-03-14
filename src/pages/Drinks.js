@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import MyContext from '../context/MyContext';
-
 import { ApiDrinksName, ApiAllCategoryDrink, ApiByCategoryDrink }
 from '../services/ApiDrinks';
 
@@ -56,12 +55,13 @@ function Drinks() {
           <button
             data-testid={ `${item.strCategory}-category-filter` }
             name={ item.strCategory }
-            key={ item.idDrink }
             type="button"
             onClick={ handleClick }
+            key={ item.idDrink }
           >
             { item.strCategory }
-          </button>))}
+          </button>
+        ))}
       <h1>Main screen drinks</h1>
       {ingredients
         .map((drink, index) => (

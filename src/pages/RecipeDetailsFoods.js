@@ -1,14 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import MyContext from '../context/MyContext';
 import { ApiFoodById } from '../services/ApiMeals';
 import { ApiDrinkRecomendation } from '../services/ApiDrinks';
+import shareIcon from '../images/shareIcon.svg';
+import './style/DetailsPage.css';
 
 function RecipeDetailsFoods() {
   const history = useHistory();
   const [foodDetail, setFoodDetail] = useState([]);
   const [foodRecomend, setFoodRecomend] = useState([]);
+  const [copySuccess, setCopySuccess] = useState('');
   const { id } = useParams();
-  console.log(id);
+  const { btnLike } = useContext(MyContext);
+  // console.log(history.location.pathname);
+  const url = history.location.pathname;
 
   useEffect(() => {
     async function getId() {
@@ -22,8 +28,17 @@ function RecipeDetailsFoods() {
     getId();
     getRecomendation();
   }, [id]);
-  console.log(foodDetail);
+  // console.log(foodDetail);
   console.log(foodRecomend);
+
+  function copying() {
+    const doThis = async () => {
+      await navigator.clipboard.writeText(url);
+      setCopySuccess('Link copied!');
+    };
+    console.log(copySuccess);
+    doThis();
+  }
   return (
     <section>
       <h1>Recipe details Foods</h1>
@@ -35,8 +50,17 @@ function RecipeDetailsFoods() {
           <h4 data-testid="recipe-title">
             {foods.strMeal}
           </h4>
-          <button type="button" data-testid="share-btn">Compartilhar</button>
-          <button type="button" ddata-testid="favorite-btn">Compartilhar</button>
+          <button
+            type="button"
+            data-testid="share-btn"
+            onClick={ () => copying() }
+          >
+            <img
+              alt="favorite"
+              src={ shareIcon }
+            />
+          </button>
+          { btnLike() }
           <p data-testid="recipe-category">{ foods.strCategory }</p>
           <img
             src={ foods.strMealThumb }
@@ -178,6 +202,7 @@ function RecipeDetailsFoods() {
             type="button"
             data-testid="start-recipe-btn"
             onClick={ () => history.push(`/foods/${id}/in-progress`) }
+            className="start_recipe_btn"
           >
             Start Recipe
 
