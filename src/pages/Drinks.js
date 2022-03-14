@@ -56,7 +56,7 @@ function Drinks() {
           <button
             data-testid={ `${item.strCategory}-category-filter` }
             name={ item.strCategory }
-            key={ item.strCategory }
+            key={ item.idDrink }
             type="button"
             onClick={ handleClick }
           >
@@ -67,7 +67,7 @@ function Drinks() {
         .map((drink, index) => (
           <div
             className="card"
-            key={ drink.idDrink }
+            key={ drink.strDrink }
             data-testid={ `${index}-recipe-card` }
           >
             <Link

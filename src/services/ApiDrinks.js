@@ -54,16 +54,24 @@ export const ApiByCategoryDrink = async (category) => {
   }
 };
 
-// export const ApiByCategoryDrink = async (category) => {
-//   // const url = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
-//   // www.thecocktaildb.com/api/json/v1/1/filter.php?c=Ordinary_Drink
-//   const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`;
-//   try {
-//     const response = await fetch(url);
-//     const data = await response.json();
-//     console.log(data);
-//     return data.drinks;
-//   } catch (error) {
-//     return error;
-//   }
-// };
+export const ApiDrinkById = async (id) => {
+  const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data.drinks;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const ApiDrinkRecomendation = async () => {
+  const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data.drinks;
+  } catch (error) {
+    return error;
+  }
+};
