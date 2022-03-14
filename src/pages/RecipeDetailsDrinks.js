@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { ApiDrinkById } from '../services/ApiDrinks';
 import { ApiFoodRecomendation } from '../services/ApiMeals';
+import MyContext from '../context/MyContext';
+import shareIcon from '../images/shareIcon.svg';
+import './style/DetailsPage.css';
 
 function RecipeDetailsDrinks() {
   const history = useHistory();
+  const { btnLike } = useContext(MyContext);
   const [drinkDetails, setDrinkDetails] = useState([]);
   const [drinkRecomend, setDrinkRecomend] = useState([]);
   const { id } = useParams();
-  console.log(id);
+  // console.log(id);
 
   useEffect(() => {
     async function getId() {
@@ -22,7 +26,7 @@ function RecipeDetailsDrinks() {
     getId();
     getRecomendation();
   }, [id]);
-  console.log(drinkDetails);
+  // console.log(drinkDetails);
   console.log(drinkRecomend);
 
   function StartRecipeClick() {
@@ -41,8 +45,16 @@ function RecipeDetailsDrinks() {
           <h4 data-testid="recipe-title">
             {item.strDrink}
           </h4>
-          <button type="button" data-testid="share-btn">Compartilhar</button>
-          <button type="button" data-testid="favorite-btn">favoritar</button>
+          <button
+            type="button"
+            data-testid="share-btn"
+          >
+            <img
+              alt="favorite"
+              src={ shareIcon }
+            />
+          </button>
+          { btnLike() }
           <p data-testid="recipe-category">{ item.strCategory }</p>
           <p data-testid="recipe-category">{ item.strAlcoholic }</p>
           <img
@@ -187,6 +199,7 @@ function RecipeDetailsDrinks() {
             type="button"
             data-testid="start-recipe-btn"
             onClick={ StartRecipeClick }
+            className="start_recipe_btn"
           >
             Start Recipe
 
