@@ -74,3 +74,25 @@ export const ApiFoodRecomendation = async () => {
     return error;
   }
 };
+
+export const ApiFoodNationality = async () => {
+  const url = 'https://www.themealdb.com/api/json/v1/1/list.php?a=list';
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data.meals;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const ApiFoodNationalitySearch = async (item) => {
+  const url = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${item}`;
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data.meals;
+  } catch (error) {
+    return error;
+  }
+};
