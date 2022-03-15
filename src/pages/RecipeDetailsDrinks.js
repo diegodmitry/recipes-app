@@ -36,7 +36,7 @@ function RecipeDetailsDrinks() {
     getId();
     getRecomendation();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [NUMBER_SIX, id, setDrinkDetails, setDrinkRecomended]);
 
   function copyingLink() {
     const doThis = async () => {
