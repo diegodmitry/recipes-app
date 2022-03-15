@@ -46,20 +46,7 @@ function RecipeDetailsFoods() {
     setIsStarted(true);
     history.push(`/foods/${id}/in-progress`);
   }
-  // useEffect(() => {
-  //   localStorage.setItem('inProgressRecipes', JSON.stringify(isStarted));
-  // }, [isStarted]);
 
-  // function handleStartFood() {
-  //   history.push(`/foods/${id}/in-progress`);
-  //   handleStartBtn();
-  //   const obj = {
-  //       meals: {
-  //           foodDetail[0]: [lista-de-ingredientes-utilizados],
-  //       }
-  //   };
-  //   localStorage.setItem('inProgressRecipes', JSON.stringify([obj]));
-  // }
   return (
     <section className="container-recipes">
       {foodDetail.map((foods, index) => (

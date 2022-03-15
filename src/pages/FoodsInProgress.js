@@ -7,14 +7,19 @@ export default function FoodsInProgress() {
   const { id } = useParams();
   const [foodDetail, setFoodDetail] = useState([]);
 
+  const obj = { meals: { [id]: 'ingredientes' } };
+
+  const [FoodsProgress, setFoodsProgress] = useState([obj]);
+
   useEffect(() => {
     async function getId() {
       const result = await ApiFoodById(id);
+      console.log(result);
+      localStorage.setItem('inProgressRecipesFoods', JSON.stringify(FoodsProgress));
       return setFoodDetail(result);
     }
     getId();
-  }, [id]);
-
+  }, [id, FoodsProgress]);
   return (
     <div>
       FoodsInProgress
