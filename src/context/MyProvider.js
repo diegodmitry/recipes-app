@@ -19,6 +19,8 @@ function MyProvider({ children }) {
   const [ingredients, setIngredients] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isFav, setIsFav] = useState(true);
+  // const [startButton, setStartButton] = useState('Start Recipe');
+  const [copySuccess, setCopySuccess] = useState(false);
   const NUMBER_ONE = 1;
   const NUMBER_TWELVE = 12;
   const firstLetter = 'firstLetter';
@@ -64,6 +66,28 @@ function MyProvider({ children }) {
           </button>)
     );
   }
+  // function btnStartRecipe() {
+  //   return (
+  //     <button
+  //       type="button"
+  //       data-testid="start-recipe-btn"
+  //       onClick={ handleStartBtn }
+  //       className="start_recipe_btn"
+  //     >
+  //       { startButton }
+  //     </button>
+  //   );
+  // }
+  // const { id } = useParams();
+  // function handleStartBtn() {
+  //   history.push(`/foods/${id}/in-progress`);
+  //   const resultLS = localStorage.getItem('inProgressRecipes');
+  //   if (resultLS !== null) {
+  //     localStorage.setItem('inProgressRecipes', id);
+  //     setStartButton('Continue Recipe');
+  //     btnStartRecipe();
+  //   }
+  // }
 
   async function handleCheckDrink() {
     const result = await ApiDrinksName(inputValue);
@@ -139,6 +163,8 @@ function MyProvider({ children }) {
   }
 
   const value = {
+    copySuccess,
+    setCopySuccess,
     btnLike,
     ingredientSelect,
     nameSelect,

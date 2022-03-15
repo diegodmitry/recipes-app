@@ -40,7 +40,6 @@ function Foods() {
   return (
     <section>
       <Header />
-
       <button
         data-testid="All-category-filter"
         name="All"
@@ -60,7 +59,6 @@ function Foods() {
           >
             { item.strCategory }
           </button>))}
-      <h1>Main Screen Foods</h1>
       {ingredients
         .map((food, index) => (
           <div
