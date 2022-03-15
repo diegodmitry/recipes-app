@@ -1,30 +1,21 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams, useHistory, Link } from 'react-router-dom';
+import { useParams, Link, useHistory } from 'react-router-dom';
 import MyContext from '../context/MyContext';
 import { ApiFoodById } from '../services/ApiMeals';
 import Paragraph from '../components/Paragraph';
 import { ApiDrinkRecomendation } from '../services/ApiDrinks';
 import shareIcon from '../images/shareIcon.svg';
-import './style/DetailsPage.css';
-import '../components/recomend.css';
-
-// import './style/RecipeDetails.css';
+import './style/RecipeDetails.css';
+import './style/Recomend.css';
 
 function RecipeDetailsFoods() {
   const NUMBER_SIX = 6;
   const history = useHistory();
   const [foodDetail, setFoodDetail] = useState([]);
   const [foodRecomend, setFoodRecomend] = useState([]);
+  const [isStarted, setIsStarted] = useState(false);
   const { id } = useParams();
-
-  const { btnLike } = useContext(MyContext);
-  // console.log(history.location.pathname);
-  const url = history.location.pathname;
-  const NUMBER_SIX = 6;
-
-//   const { btnLike, copySuccess,
-//     setCopySuccess,
-//   } = useContext(MyContext);
+  const { btnLike, copySuccess, setCopySuccess } = useContext(MyContext);
 
   useEffect(() => {
     async function getId() {
@@ -34,25 +25,31 @@ function RecipeDetailsFoods() {
     async function getRecomendation() {
       const result = await ApiDrinkRecomendation();
       const filter = result.slice(0, NUMBER_SIX);
-
+      setFoodRecomend(filter);
       return setFoodRecomend(filter);
-
-//       setFoodRecomend(filter);
-
     }
     getId();
     getRecomendation();
   }, [id]);
-  console.log(foodRecomend);
+
   function copyingLink() {
     const doThis = async () => {
-      const url = history.location.pathname;
-      await navigator.clipboard.writeText(`http://localhost:3000${url}`);
+      await navigator.clipboard.writeText(`http://localhost:3000/foods/${id}`);
       setCopySuccess(true);
       return copySuccess;
     };
     doThis();
   }
+
+  function isStartedFunc() {
+    localStorage.setItem('inProgressRecipes', JSON.stringify(true));
+    setIsStarted(true);
+    history.push(`/foods/${id}/in-progress`);
+  }
+  // useEffect(() => {
+  //   localStorage.setItem('inProgressRecipes', JSON.stringify(isStarted));
+  // }, [isStarted]);
+
   // function handleStartFood() {
   //   history.push(`/foods/${id}/in-progress`);
   //   handleStartBtn();
@@ -64,8 +61,7 @@ function RecipeDetailsFoods() {
   //   localStorage.setItem('inProgressRecipes', JSON.stringify([obj]));
   // }
   return (
-    <section>
-      <h1>Recipe details Foods</h1>
+    <section className="container-recipes">
       {foodDetail.map((foods, index) => (
         <div
           className="card"
@@ -74,6 +70,13 @@ function RecipeDetailsFoods() {
           <h4 data-testid="recipe-title">
             {foods.strMeal}
           </h4>
+          <img
+            src={ foods.strMealThumb }
+            alt="ImageCard"
+            width="200px"
+            height="200px"
+            data-testid="recipe-photo"
+          />
           <button
             type="button"
             data-testid="share-btn"
@@ -87,14 +90,6 @@ function RecipeDetailsFoods() {
           { btnLike() }
           { copySuccess && <span>Link copied!</span>}
           <p data-testid="recipe-category">{ foods.strCategory }</p>
-          <img
-            src={ foods.strMealThumb }
-            alt="ImageCard"
-            width="200px"
-            height="200px"
-            data-testid="recipe-photo"
-          />
-
           <p data-testid="instructions">
             { foods.strInstructions }
           </p>
@@ -102,7 +97,9 @@ function RecipeDetailsFoods() {
           <div
             className="containerRecomend"
           >
-            <p>Receitas recomendadas</p>
+            <p>
+              Receitas recomendadas
+            </p>
             <div className="cardRecomend">
               {foodRecomend
                 .map((food, ind) => (
@@ -127,47 +124,21 @@ function RecipeDetailsFoods() {
                 )) }
             </div>
           </div>
-
-//           <p
-//             data-testid={ `${index}-recomendation-card` }
-//           >
-//             Receitas recomendadas
-//           </p>
-
           <p
             data-testid={ `${index}-ingredient-name-and-measure` }
           />
-          <Paragraph foods={ foods } />
-          <div className="card-item">
-            {foodRecomend.map((drink) => (
-              <div
-                className="card-items"
-                key={ drink.strDrink }
-              >
-                <Link
-                  to={ `/drinks/${drink.idDrink}` }
-                >
-                  <img
-                    src={ drink.strDrinkThumb }
-                    alt="ImageCard"
-                    className="card-items-img"
-                  />
-                </Link>
-              </div>
-            ))}
-          </div>
+          <Paragraph item={ foods } />
           <button
             type="button"
             data-testid="start-recipe-btn"
-            // onClick={}
+            onClick={ isStartedFunc }
             className="start_recipe_btn"
           >
-            Start Recipe
+            { isStarted ? 'Continue Recipe' : 'Start Recipe' }
           </button>
         </div>
       ))}
     </section>
   );
 }
-
 export default RecipeDetailsFoods;
