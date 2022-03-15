@@ -4,12 +4,12 @@
   position: fixed;
   top: 0;
   width: 100%;
-} */
+} 
 
-/* .title {
+.title {
   margin-left: 30px;
-} */
-/* 
+} 
+
 .nav {
   align-items: center;
   display: flex;
@@ -32,4 +32,4 @@
 .icons:hover {
   background-color: #ff5100;
   color: black;
-} */
+}  */

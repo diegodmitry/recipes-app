@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams, Link, useHistory } from 'react-router-dom'; // colocar useHistory dps
+import { useParams, Link, useHistory } from 'react-router-dom';
 import MyContext from '../context/MyContext';
 import { ApiFoodById } from '../services/ApiMeals';
 import Paragraph from '../components/Paragraph';
@@ -14,7 +14,6 @@ function RecipeDetailsFoods() {
   const [foodDetail, setFoodDetail] = useState([]);
   const [foodRecomend, setFoodRecomend] = useState([]);
   const [isStarted, setIsStarted] = useState(false);
-  // const [test, setTest] = useState(false);
   const { id } = useParams();
   const { btnLike, copySuccess, setCopySuccess } = useContext(MyContext);
 
@@ -135,7 +134,6 @@ function RecipeDetailsFoods() {
             className="start_recipe_btn"
           >
             { isStarted ? 'Continue Recipe' : 'Start Recipe' }
-            {/* Start Recipe */}
           </button>
         </div>
       ))}
