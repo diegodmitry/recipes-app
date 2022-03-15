@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import search from '../images/searchIcon.svg';
 import Search from './Search';
+import '../pages/style/Header.css';
 
 function Header() {
   const [visibleInput, setVisibleInput] = useState(false);
@@ -73,35 +74,39 @@ function Header() {
     return title;
   }
   return (
-    <header>
-      <Link
-        to="/profile"
-      >
-        <img
-          data-testid="profile-top-btn"
-          src={ profileIcon }
-          alt="profile-foto"
-        />
-      </Link>
+    <header className="header">
       <h1 data-testid="page-title">{handleTitle()}</h1>
-
-      { visibleImage && (
-        <button
-          type="button"
-          onClick={ () => setVisibleInput((prevVisible) => !prevVisible) }
+      <div className="nav">
+        <Link
+          to="/profile"
         >
           <img
-            src={ search }
-            alt="search-bar"
-            data-testid="search-top-btn"
+            data-testid="profile-top-btn"
+            src={ profileIcon }
+            className="icons"
+            alt="profile-foto"
           />
-        </button>
+        </Link>
 
-      )}
+        { visibleImage && (
+          <button
+            type="button"
+            className="icons button"
+            onClick={ () => setVisibleInput((prevVisible) => !prevVisible) }
+          >
+            <img
+              src={ search }
+              alt="search-bar"
+              data-testid="search-top-btn"
+            />
+          </button>
 
-      {visibleInput && (
-        <Search />
-      )}
+        )}
+
+        {visibleInput && (
+          <Search />
+        )}
+      </div>
     </header>
   );
 }

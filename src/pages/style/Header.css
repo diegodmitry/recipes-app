@@ -1,0 +1,35 @@
+/* .header {
+  background-color: #f7a100;
+  display: flex;
+  position: fixed;
+  top: 0;
+  width: 100%;
+} */
+
+/* .title {
+  margin-left: 30px;
+} */
+/* 
+.nav {
+  align-items: center;
+  display: flex;
+  justify-content: end;
+  width: 100%;
+}
+
+.icons {
+  background-color: inherit;
+  border: none;
+  border-radius: 4px;
+  color: black;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 25px;
+  padding: 20px;
+  transition: 0.25s;
+}
+
+.icons:hover {
+  background-color: #ff5100;
+  color: black;
+} */

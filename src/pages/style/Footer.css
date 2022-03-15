@@ -1,0 +1,24 @@
+.footer {
+  background-color: #f7a100;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  width: 100%;
+}
+
+.btn-footer {
+  background-color: #f7a100;
+  border: none;
+  cursor: pointer;
+  display: flexbox;
+  font-size: 18px;
+  margin-right: 10px;
+  padding: 5px 40px;
+  transition: 0.22s;
+  width: 100%;
+}
+
+.btn-footer:hover {
+  background-color: #ff5100;
+}
