@@ -9,14 +9,42 @@ function Paragraph({ item }) {
         {item.strInstructions}
       </p>
       <iframe title="video" data-testid="video" src="">VIdeo</iframe> */}
-      <div>
-        <p
-          data-testid="0-ingredient-name-and-measure"
-        >
-          {item.strIngredient1}
-          {item.strMeasure1}
-        </p>
+      {/* <div>
+        <input type="checkbox" id="ing0" data-testid="0-ingredient-name-and-measure" />
+        {item.strMeasure1}
+        <label htmlFor="ing0">{item.strIngredient1}</label>
       </div>
+      <div>
+        <input type="checkbox" id="ing1" data-testid="1-ingredient-name-and-measure" />
+        {item.strIngredient2}
+        <label htmlFor="ing1">{item.strMeasure2}</label>
+      </div>
+      <div>
+        <input type="checkbox" id="ing2" data-testid="2-ingredient-name-and-measure" />
+        {item.strIngredient3}
+        <label htmlFor="ing2">{item.strMeasure3}</label>
+      </div>
+      <div>
+        <input type="checkbox" id="ing3" data-testid="3-ingredient-name-and-measure" />
+        {item.strIngredient4}
+        <label htmlFor="ing3">{item.strMeasure4}</label>
+      </div>
+      <div>
+        <input type="checkbox" id="ing4" data-testid="4-ingredient-name-and-measure" />
+        {item.strIngredient5}
+        <label htmlFor="ing4">{item.strMeasure5}</label>
+      </div>
+      <div>
+        <input type="checkbox" id="ing5" data-testid="5-ingredient-name-and-measure" />
+        {item.strIngredient6}
+        <label htmlFor="ing5">{item.strMeasure6}</label>
+      </div> */}
+      <p
+        data-testid="0-ingredient-name-and-measure"
+      >
+        {item.strMeasure1}
+        {item.strIngredient1}
+      </p>
       <p
         data-testid="1-ingredient-name-and-measure"
       >

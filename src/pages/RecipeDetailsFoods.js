@@ -42,12 +42,13 @@ function RecipeDetailsFoods() {
   }
 
   function isStartedFunc() {
+    localStorage.setItem('inProgressRecipes', JSON.stringify(true));
     setIsStarted(true);
     history.push(`/foods/${id}/in-progress`);
   }
-  useEffect(() => {
-    localStorage.setItem('inProgressRecipes', JSON.stringify(isStarted));
-  }, [isStarted]);
+  // useEffect(() => {
+  //   localStorage.setItem('inProgressRecipes', JSON.stringify(isStarted));
+  // }, [isStarted]);
 
   // function handleStartFood() {
   //   history.push(`/foods/${id}/in-progress`);

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import MyContext from './MyContext';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -28,6 +28,7 @@ function MyProvider({ children }) {
   const firstLetter = 'firstLetter';
   const stringName = 'name';
   const ingredientName = 'ingredients';
+  const { id } = useParams();
 
   const history = useHistory();
   const { location: { pathname } } = history;
@@ -50,15 +51,8 @@ function MyProvider({ children }) {
 
   function setingFavFalse() {
     setIsFav(false);
-    // localStorage.setItem('favoriteRecipes', [{
-    //   idDrink,
-    //   nationality,
-    //   strCategory,
-    //   strAlcoholic,
-    //   strDrink,
-    //   strDrinkThumb,
-    // }]);
-    localStorage.setItem('favoriteRecipes', JSON.stringify(history.location.pathname));
+    const obj = { id };
+    localStorage.setItem('favoriteRecipes', JSON.stringify([obj]));
   }
 
   function setingFavTrue() {
