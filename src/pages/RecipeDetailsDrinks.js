@@ -4,7 +4,11 @@ import { ApiDrinkById } from '../services/ApiDrinks';
 import { ApiFoodRecomendation } from '../services/ApiMeals';
 import MyContext from '../context/MyContext';
 import shareIcon from '../images/shareIcon.svg';
-import './style/RecipeDetails.css';
+
+import './style/DetailsPage.css';
+import '../components/recomend.css';
+
+// import './style/RecipeDetails.css';
 
 function RecipeDetailsDrinks() {
   const history = useHistory();
@@ -15,6 +19,7 @@ function RecipeDetailsDrinks() {
   const { id } = useParams();
 
   useEffect(() => {
+    const NUMBER_SIX = 6;
     async function getId() {
       const result = await ApiDrinkById(id);
       return setDrinkDetails(result);
@@ -22,7 +27,9 @@ function RecipeDetailsDrinks() {
     async function getRecomendation() {
       const result = await ApiFoodRecomendation();
       const filter = result.slice(0, NUMBER_SIX);
-      setDrinkRecomended(filter);
+      return setDrinkRecomend(filter);
+//       setDrinkRecomended(filter);
+
     }
     getId();
     getRecomendation();
@@ -79,11 +86,35 @@ function RecipeDetailsDrinks() {
           </p>
           <iframe title="video" data-testid="video" src="">Video</iframe>
           <div>
-            <p
-              data-testid={ `${index}-recomendation-card` }
+            <div
+              className="containerRecomend"
             >
-              Receitas recomendadas
-            </p>
+              <p>Receitas recomendadas</p>
+              <div className="cardRecomend">
+                {drinkRecomend
+                  .map((food, ind) => (
+                    <div
+                      className="cardRecomend2"
+                      key={ food.strMeal }
+                      data-testid={ `${ind}-recomendation-card` }
+                    >
+                      <Link
+                        to={ `/foods/${food.idMeal}` }
+                      >
+                        <img
+                          src={ food.strMealThumb }
+                          alt="ImageCard"
+                          width="100px"
+                          data-testid={ `${ind}-card-img` }
+                        />
+                      </Link>
+                      <h4 data-testid={ `${ind}-recomendation-title` }>{food.strMeal}</h4>
+                    </div>
+
+                  )) }
+              </div>
+
+            </div>
             <p
               data-testid={ `${index}-ingredient-name-and-measure` }
             >

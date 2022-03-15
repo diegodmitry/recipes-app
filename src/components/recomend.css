@@ -1,0 +1,17 @@
+.containerRecomend {
+  margin-bottom: 50px;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.cardRecomend {
+  display: flex;
+  gap: 10px;
+  overflow-x: scroll;
+}
+
+.cardRecomend2 {
+  border-radius: 10px;
+  min-width: 50vw;
+  padding: 30px;
+}

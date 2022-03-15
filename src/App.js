@@ -18,6 +18,7 @@ import RecipeDetailsFoods from './pages/RecipeDetailsFoods';
 import RecipeDetailsDrinks from './pages/RecipeDetailsDrinks';
 import FoodsInProgress from './pages/FoodsInProgress';
 import DrinksInProgress from './pages/DrinksInProgress';
+import NotFound from './components/NotFound';
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
             path="/explore/drinks/ingredients"
             component={ DrinksByIngredients }
           />
+          <Route component={ NotFound } />
         </MyProvider>
       </Switch>
     </BrowserRouter>
