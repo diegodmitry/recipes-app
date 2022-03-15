@@ -52,7 +52,13 @@ function FoodsByNationality() {
             </option>
 
           ))}
-        <option value="All">All</option>
+        <option
+          value="All"
+          data-testid="All-option"
+        >
+          All
+
+        </option>
       </select>
       {foodNationalitySearch.map((item, index) => (
         <div
