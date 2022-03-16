@@ -7,7 +7,7 @@
   position: fixed;
 }
 
-.container {
+.container-login {
   align-items: center;
   background-color: rgba(0, 0, 0, 0.8);
   border-radius: 10px;
@@ -20,13 +20,13 @@
 }
 
 .text {
-  color: aliceblue;
+  color: #f7a100;
   font-family: Times New Roman , Times , serif;
   font-weight: 600;
 }
 
 .btn {
-  background-color: rgb(94, 255, 30);
+  background-color: #f7a100;
   border: 0;
   border-radius: 3px;
   cursor: pointer;
@@ -59,7 +59,7 @@
 }
 
 .input:focus {
-  border-color: rgb(65, 177, 21);
+  border-color: #ff5100;
   outline: none;
 }
 
@@ -86,7 +86,7 @@
     position: fixed;
   }
 
-  .container {
+  .container-login {
     align-items: center;
     background-color: rgba(0, 0, 0, 0.8);
     border-radius: 10px;
@@ -134,7 +134,7 @@
     position: fixed;
   }
 
-  .container {
+  .container-login {
     align-items: center;
     background-color: rgba(0, 0, 0, 0.8);
     border: 2px rgba(255, 255, 255, 0.342) solid;
@@ -142,9 +142,8 @@
     display: flex;
     flex-direction: column;
     font-size: 1.5rem;
-    margin: 150px auto;
     padding: 10px;
-    width: 100%;
+    width: 92%;
   }
 
   .btn {
