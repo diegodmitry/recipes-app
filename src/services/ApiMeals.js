@@ -96,3 +96,14 @@ export const ApiFoodNationalitySearch = async (item) => {
     return error;
   }
 };
+
+export const ApiFoodSurprise = async () => {
+  const url = 'https://www.themealdb.com/api/json/v1/1/random.php';
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data.meals;
+  } catch (error) {
+    return error;
+  }
+};

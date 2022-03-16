@@ -22,6 +22,7 @@ function MyProvider({ children }) {
   const [drinkRecomended, setDrinkRecomended] = useState([]);
   const [isFav, setIsFav] = useState(true);
   const [copySuccess, setCopySuccess] = useState(false);
+  const [isStarted, setIsStarted] = useState(false);
   const NUMBER_SIX = 6;
   const NUMBER_ONE = 1;
   const NUMBER_TWELVE = 12;
@@ -42,8 +43,6 @@ function MyProvider({ children }) {
   function firstLetterSelect() {
     setCurrentFilter(firstLetter);
   }
-
-  const [isStarted, setIsStarted] = useState(false);
 
   function isStartedFunc() {
     setIsStarted(true);

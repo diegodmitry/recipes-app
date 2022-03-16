@@ -100,11 +100,10 @@ export default function DrinksInProgress() {
       ))}
       <button
         type="button"
-        onClick={ () => history.push('/done-recipes') }
         data-testid="finish-recipe-btn"
+        onClick={ () => history.push('/done-recipes') }
       >
         Finish Recipe
-
       </button>
     </div>
   );

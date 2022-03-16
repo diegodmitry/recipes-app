@@ -135,7 +135,6 @@ function RecipeDetailsDrinks() {
             className="start_recipe_btn"
           >
             { isStarted ? 'Continue Recipe' : 'Start Recipe' }
-            Start Recipe
           </button>
         </div>
       ))}

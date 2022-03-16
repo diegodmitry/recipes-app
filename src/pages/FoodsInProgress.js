@@ -47,12 +47,12 @@ export default function FoodsInProgress() {
   }
   return (
     <div>
-      FoodsInProgress
       {foodDetail.map((item) => (
         <div
           className="card"
           key={ item.idMeal }
         >
+          <img src={ item.strMealThumb } alt="ImageCard" data-testid="recipe-photo" />
           <h4 data-testid="recipe-title">
             {item.strMeal}
           </h4>
@@ -98,8 +98,8 @@ export default function FoodsInProgress() {
       ))}
       <button
         type="button"
-        onClick={ () => history.push('/done-recipes') }
         data-testid="finish-recipe-btn"
+        onClick={ () => history.push('/done-recipes') }
       >
         Finish Recipe
       </button>
