@@ -42,7 +42,7 @@ function RecipeDetailsDrinks() {
     getRecomendation();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, NUMBER_SIX, setDrinkDetails, setDrinkRecomended]);
-
+  
   function copyingLink() {
     const doThis = async () => {
       await navigator.clipboard.writeText(`http://localhost:3000/drinks/${id}`);

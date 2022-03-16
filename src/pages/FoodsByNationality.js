@@ -14,9 +14,11 @@ function FoodsByNationality() {
       const result = await ApiFoodNationality();
       return setFoodNationality(result);
     }
+
     async function getIdSearchInitial() {
-      const result = await ApiFoodNationalitySearch('american');
-      return setFoodNationalitySearch(result);
+      const result = await ApiMealsName('');
+      const categoryFilter = result.slice(0, NUMBER_TWELVE);
+      return setFoodNationalitySearch(categoryFilter);
     }
     getIdSearchInitial();
     getId();
@@ -30,9 +32,10 @@ function FoodsByNationality() {
     }
     console.log(target.value);
     const result = await ApiFoodNationalitySearch(target.value);
-    return setFoodNationalitySearch(result);
+    const categoryFilter = result.slice(0, NUMBER_TWELVE);
+    return setFoodNationalitySearch(categoryFilter);
   }
-  console.log(foodNationalitySearch);
+  console.log('teste', foodNationalitySearch);
   return (
     <div>
       <Header />
