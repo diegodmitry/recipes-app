@@ -1,9 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ApiDrinkSurprise } from '../services/ApiDrinks';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 function ExploreDrinks({ history }) {
+  async function supriseDrinkBtn() {
+    const result = await ApiDrinkSurprise();
+    history.push(`/drinks/${result[0].idDrink}`);
+  }
+
   return (
     <section>
       <Header item="Drinks" />
@@ -17,6 +23,7 @@ function ExploreDrinks({ history }) {
       <button
         type="button"
         data-testid="explore-surprise"
+        onClick={ supriseDrinkBtn }
       >
         Surprise me!
       </button>
