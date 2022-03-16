@@ -107,3 +107,14 @@ export const ApiFoodSurprise = async () => {
     return error;
   }
 };
+
+export const ApiFoodAllIngredients = async () => {
+  const url = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data.meals;
+  } catch (error) {
+    return error;
+  }
+};
