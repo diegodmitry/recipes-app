@@ -53,7 +53,12 @@ function App() {
             path="/explore/drinks/ingredients"
             component={ DrinksByIngredients }
           />
-          <Route component={ NotFound } />
+          <Route
+            exact
+            path="/explore/drinks/nationalities"
+            component={ NotFound }
+          />
+          {/* ver isso aqui */}
         </MyProvider>
       </Switch>
     </BrowserRouter>
