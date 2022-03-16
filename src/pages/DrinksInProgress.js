@@ -1,171 +1,100 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-// import { ApiFoodById } from '../services/ApiMeals';
+import MyContext from '../context/MyContext';
 import { ApiDrinkById } from '../services/ApiDrinks';
 import shareIcon from '../images/shareIcon.svg';
-import MyContext from '../context/MyContext';
 
 export default function DrinksInProgress() {
   const history = useHistory();
   const { id } = useParams();
+  const { btnLike, copySuccess, setCopySuccess } = useContext(MyContext);
   const [drinkDetail, setDrinkDetail] = useState([]);
-  const { btnLike } = useContext(MyContext);
+  // const [FoodsProgress, setFoodsProgress] = useState([]);
+  const [paragraphy, setParagraphy] = useState([]);
 
   useEffect(() => {
     async function getId() {
       const result = await ApiDrinkById(id);
-      return setDrinkDetail(result);
+      const ingredientsName = Object.entries(result[0])
+        .filter((item) => item[0].includes('strIngredient'))
+        .filter((item) => item[1] !== '' && item[1] !== ' ' && item[1] !== null)
+        .map((item) => item[1]);
+      const MeasureName = Object.entries(result[0])
+        .filter((item) => item[0].includes('strMeasure'))
+        .filter((item) => item[1] !== '' && item[1] !== ' ' && item[1] !== null)
+        .map((item) => item[1]);
+        // || item[0].includes('strMeasure'));
+      console.log('medidas', MeasureName);
+      console.log('ingredientes', ingredientsName);
+      // const paragraph = {
+      //   ingredientsName[index] :
+      // };
+      setParagraphy(ingredientsName);
+      // const obj = { meals: { [id]: paragraph } };
+      // setFoodsProgress(obj);
+      // localStorage.setItem('inProgressRecipes', JSON.stringify(FoodsProgress));
+      setDrinkDetail(result);
     }
     getId();
   }, [id]);
-
+  function copyingLink() {
+    const doThis = async () => {
+      await navigator.clipboard.writeText(`http://localhost:3000/foods/${id}`);
+      setCopySuccess(true);
+      return copySuccess;
+    };
+    doThis();
+  }
   return (
     <div>
-      Drinks In Progres
+      DrinksInProgress
       {drinkDetail.map((item) => (
         <div
           className="card"
           key={ item.idDrink }
         >
-          <img src={ item.strDrinkThumn } alt="ImageCard" data-testid="recipe-photo" />
           <h4 data-testid="recipe-title">
             {item.strDrink}
           </h4>
-          {btnLike()}
+          <img
+            src={ item.strDrinkThumb }
+            alt="ImageCard"
+            width="200px"
+            height="200px"
+            data-testid="recipe-photo"
+          />
           <button
             type="button"
             data-testid="share-btn"
-            onClick={ console.log('share btn') }
+            onClick={ () => copyingLink() }
           >
             <img
-              alt="share_icon"
+              alt="favorite"
               src={ shareIcon }
             />
           </button>
+          { btnLike() }
+          { copySuccess && <span>Link copied!</span>}
           <p data-testid="recipe-category">{ item.strCategory }</p>
+          <p data-testid="recipe-category">{ item.strAlcoholic }</p>
+          <p data-testid="instructions">
+            { item.strInstructions }
+          </p>
           <div>
-            <h4>Instructions</h4>
-            <p data-testid="instructions">{ item.strInstructions }</p>
-            <p
-              data-testid="1-ingredient-step"
-            >
-              {item.strMeasure}
-              {item.strIngredient1}
-            </p>
-            <p
-              data-testid="2-ingredient-step"
-            >
-              {item.strIngredient2}
-              {item.strMeasure2}
-            </p>
-            <p
-              data-testid="3-ingredient-step"
-            >
-              {item.strIngredient3}
-              {item.strMeasure3}
-            </p>
-            <p
-              data-testid="4-ingredient-step"
-            >
-              {item.strIngredient4}
-              {item.strMeasure4}
-            </p>
-            <p
-              data-testid="5-ingredient-step"
-            >
-              {item.strIngredient5}
-              {item.strMeasure5}
-            </p>
-            <p
-              data-testid="6-ingredient-step"
-            >
-              {item.strIngredient6}
-              {item.strMeasure6}
-            </p>
-            <p
-              data-testid="7-ingredient-step"
-            >
-              {item.strIngredient7}
-              {item.strMeasure7}
-            </p>
-            <p
-              data-testid="8-ingredient-step"
-            >
-              {item.strIngredient8}
-              {item.strMeasure8}
-            </p>
-            <p
-              data-testid="9-ingredient-step"
-            >
-              {item.strIngredient9}
-              {item.strMeasure9}
-            </p>
-            <p
-              data-testid="10-ingredient-step"
-            >
-              {item.strIngredient10}
-              {item.strMeasure10}
-            </p>
-            <p
-              data-testid="11-ingredient-step"
-            >
-              {item.strIngredient11}
-              {item.strMeasure11}
-            </p>
-            <p
-              data-testid="12-ingredient-step"
-            >
-              {item.strIngredient12}
-              {item.strMeasure12}
-            </p>
-            <p
-              data-testid="13-ingredient-step"
-            >
-              {item.strIngredient13}
-              {item.strMeasure13}
-            </p>
-            <p
-              data-testid="14-ingredient-step"
-            >
-              {item.strIngredient14}
-              {item.strMeasure14}
-            </p>
-            <p
-              data-testid="15-ingredient-step"
-            >
-              {item.strIngredient15}
-              {item.strMeasure15}
-            </p>
-            <p
-              data-testid="16-ingredient-step"
-            >
-              {item.strIngredient16}
-              {item.strMeasure16}
-            </p>
-            <p
-              data-testid="17-ingredient-step"
-            >
-              {item.strIngredient17}
-              {item.strMeasure17}
-            </p>
-            <p
-              data-testid="18-ingredient-step"
-            >
-              {item.strIngredient18}
-              {item.strMeasure18}
-            </p>
-            <p
-              data-testid="19-ingredient-step"
-            >
-              {item.strIngredient19}
-              {item.strMeasure19}
-            </p>
-            <p
-              data-testid="20-ingredient-step"
-            >
-              {item.strIngredient20}
-              {item.strMeasure20}
-            </p>
+            {paragraphy.map((ingrid, index) => (
+              <div
+                key={ ingrid }
+                data-testid={ `${index}-ingredient-step` }
+              >
+                {`${item[`strIngredient${index + 1}`]}
+              : ${item[`strMeasure${index + 1}`]}` }
+                <input
+                  type="checkbox"
+                  value={ `${item[`strIngredient${index + 1}`]}
+              : ${item[`strMeasure${index + 1}`]}` }
+                />
+              </div>
+            )) }
           </div>
         </div>
       ))}

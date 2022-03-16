@@ -1,47 +1,50 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import MyContext from '../context/MyContext';
 import { ApiFoodById } from '../services/ApiMeals';
 import shareIcon from '../images/shareIcon.svg';
-import MyContext from '../context/MyContext';
 
 export default function FoodsInProgress() {
   const history = useHistory();
   const { id } = useParams();
+  const { btnLike, copySuccess, setCopySuccess } = useContext(MyContext);
   const [foodDetail, setFoodDetail] = useState([]);
-  const [paragraph, setParagraph] = useState([]);
-  const { btnLike } = useContext(MyContext);
-
-  function renderParagraph(result) {
-    // if (result[0] !== null || result[0] !== undefined) {
-    // const keys = Object.entries(result[0]);
-    // const values = Object.values(result[0]);
-    // const filteredKeys = keys.filter((item) => (
-    //   // item.match(/strIngredient/i) || item.match(/strMeasure/i)
-    //   item[0].match(/strIngredient/i) || item[0].match(/strMeasure/i)
-    // ));
-    // setParagraph(filteredKeys);
-    const ingredients = Object.fromEntries(
-      Object.entries(result[0]).filter(([key]) => key.match(/strIngredient/i)),
-    );
-    const measure = Object.fromEntries(
-      Object.entries(result[0]).filter(([key]) => key.match(/strMeasure/i)),
-    );
-    const objetoGeral = { ...ingredients, ...measure };
-    console.log('obj', objetoGeral);
-    setParagraph([objetoGeral]);
-    // }
-  }
-  // console.log(paragraph);
+  // const [FoodsProgress, setFoodsProgress] = useState([]);
+  const [paragraphy, setParagraphy] = useState([]);
 
   useEffect(() => {
     async function getId() {
       const result = await ApiFoodById(id);
-      renderParagraph(result);
-      return setFoodDetail(result);
+      const ingredientsName = Object.entries(result[0])
+        .filter((item) => item[0].includes('strIngredient'))
+        .filter((item) => item[1] !== '' && item[1] !== ' ' && item[1] !== null)
+        .map((item) => item[1]);
+      const MeasureName = Object.entries(result[0])
+        .filter((item) => item[0].includes('strMeasure'))
+        .filter((item) => item[1] !== '' && item[1] !== ' ' && item[1] !== null)
+        .map((item) => item[1]);
+        // || item[0].includes('strMeasure'));
+      console.log('medidas', MeasureName);
+      console.log('ingredientes', ingredientsName);
+      // const paragraph = {
+      //   ingredientsName[index] :
+      // };
+      setParagraphy(ingredientsName);
+      // const obj = { meals: { [id]: paragraph } };
+      // setFoodsProgress(obj);
+      // localStorage.setItem('inProgressRecipes', JSON.stringify(FoodsProgress));
+      setFoodDetail(result);
     }
     getId();
   }, [id]);
-
+  function copyingLink() {
+    const doThis = async () => {
+      await navigator.clipboard.writeText(`http://localhost:3000/foods/${id}`);
+      setCopySuccess(true);
+      return copySuccess;
+    };
+    doThis();
+  }
   return (
     <div>
       {foodDetail.map((item) => (
@@ -53,30 +56,44 @@ export default function FoodsInProgress() {
           <h4 data-testid="recipe-title">
             {item.strMeal}
           </h4>
-          {btnLike()}
+          <img
+            src={ item.strMealThumb }
+            alt="ImageCard"
+            width="200px"
+            height="200px"
+            data-testid="recipe-photo"
+          />
           <button
             type="button"
             data-testid="share-btn"
+            onClick={ () => copyingLink() }
           >
             <img
-              alt="share_icon"
+              alt="favorite"
               src={ shareIcon }
             />
           </button>
+          { btnLike() }
+          { copySuccess && <span>Link copied!</span>}
           <p data-testid="recipe-category">{ item.strCategory }</p>
-          <div>
-            <h4>Instructions</h4>
-            <p data-testid="instructions">{ item.strInstructions }</p>
-            {/* <p
+          <p data-testid="instructions">
+            { item.strInstructions }
+          </p>
+          {paragraphy.map((ingrid, index) => (
+            <div
+              key={ ingrid }
               data-testid={ `${index}-ingredient-step` }
             >
-              {`${item}.strMeasure1`}
-              {`${item}.strIngredintet`}
-            </p> */}
-            { paragraph.map((a) => (
-              <p key={ a.strIngredient20 }>{a.strIngredient1}</p>
-            ))}
-          </div>
+              {`${item[`strIngredient${index + 1}`]}
+              : ${item[`strMeasure${index + 1}`]}` }
+              <input
+                type="checkbox"
+                value={ `${item[`strIngredient${index + 1}`]}
+              : ${item[`strMeasure${index + 1}`]}` }
+              />
+            </div>
+
+          )) }
         </div>
       ))}
       <button
@@ -89,3 +106,4 @@ export default function FoodsInProgress() {
     </div>
   );
 }
+// Os ingredientes devem possuir o atributo data-testid=${index}-ingredient-step, a verificação será feita pelo length do atributo. esta parte ainda tem que ver...

@@ -4,7 +4,7 @@ import { ApiDrinkById } from '../services/ApiDrinks';
 import { ApiFoodRecomendation } from '../services/ApiMeals';
 import MyContext from '../context/MyContext';
 import shareIcon from '../images/shareIcon.svg';
-import Paragraph from '../components/Paragraph';
+import Paragrafo from '../components/Paragrafo';
 import './style/Recomend.css';
 import './style/RecipeDetails.css';
 
@@ -22,10 +22,15 @@ function RecipeDetailsDrinks() {
   const { id } = useParams();
 
   const [isStarted, setIsStarted] = useState(false);
-
+  const [paragraphy, setParagraphy] = useState([]);
   useEffect(() => {
     async function getId() {
       const result = await ApiDrinkById(id);
+      const ingredientsName = Object.entries(result[0])
+        .filter((item) => item[0].includes('strIngredient'))
+        .filter((item) => item[1] !== '' && item[1] !== ' ' && item[1] !== null)
+        .map((item) => item[1]);
+      setParagraphy(ingredientsName);
       return setDrinkDetails(result);
     }
     async function getRecomendation() {
@@ -36,7 +41,7 @@ function RecipeDetailsDrinks() {
     getId();
     getRecomendation();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [id, NUMBER_SIX, setDrinkDetails, setDrinkRecomended]);
 
   function copyingLink() {
     const doThis = async () => {
@@ -122,7 +127,7 @@ function RecipeDetailsDrinks() {
           <p
             data-testid={ `${index}-ingredient-name-and-measure` }
           />
-          <Paragraph item={ item } />
+          <Paragrafo iten={ item } paragraphy={ paragraphy } />
           <button
             type="button"
             data-testid="start-recipe-btn"
