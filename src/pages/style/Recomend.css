@@ -1,5 +1,5 @@
 .containerRecomend {
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   max-width: 100%;
   overflow: hidden;
 }
@@ -14,4 +14,8 @@
   border-radius: 10px;
   min-width: 50vw;
   padding: 30px;
+}
+
+.recomendImg {
+  width: 10rem;
 }

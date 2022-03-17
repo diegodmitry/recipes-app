@@ -1,43 +1,51 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { ApiFoodAllIngredients } from '../services/ApiMeals';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import MyContext from '../context/MyContext';
 
 function FoodsByIngredients() {
   const [allIngredients, setAllIngredients] = useState([]);
+  const { handleCardBtn } = useContext(MyContext);
+  // const [comidas, setComidas] = useState([]);
   const doze = 12;
   async function requireFoodIngredients() {
     const result = await ApiFoodAllIngredients();
     setAllIngredients(result.slice(0, doze));
-    // setAllIngredients(result);
-    // console.log('result', result);
   }
-  // console.log('allIngredients', allIngredients);
 
   useEffect(() => {
     requireFoodIngredients();
   }, []);
+
   return (
     <div>
       <Header />
       <h1>Foods by Ingredients</h1>
       { allIngredients.map((item, index) => (
-        <div
-          className="card"
+        <Link
+          // eslint-disable-next-line react/jsx-no-bind
+          onClick={ handleCardBtn }
           key={ item.idIngredient }
-          data-testid={ `${index}-ingredient-card` }
+          to="/foods"
         >
-          <h4 data-testid={ `${index}-card-name` }><b>{item.strIngredient}</b></h4>
-          <img
-            src={ `https://www.themealdb.com/images/ingredients/${item.strIngredient}-Small.png` }
-            alt="Avatar"
-            style={ { width: '100px' } }
-            data-testid={ `${index}-card-img` }
-          />
-          {/* <h4><b>{item.strDescription}</b></h4> */}
-          {/* {console.log(item)}
-          {console.log(index)} */}
-        </div>
+          <div
+            className="card"
+            data-testid={ `${index}-ingredient-card` }
+          >
+            <h4 data-testid={ `${index}-card-name` }><b>{item.strIngredient}</b></h4>
+            <img
+              src={ `https://www.themealdb.com/images/ingredients/${item.strIngredient}-Small.png` }
+              alt={ item.strIngredient }
+              style={ { width: '100px' } }
+              data-testid={ `${index}-card-img` }
+              name={ item.strIngredient }
+            />
+          </div>
+          {/* {item.strIngredient} */}
+        </Link>
+        // </button>
       ))}
       <Footer />
     </div>

@@ -3,14 +3,55 @@ import { useHistory, useParams } from 'react-router-dom';
 import MyContext from '../context/MyContext';
 import { ApiFoodById } from '../services/ApiMeals';
 import shareIcon from '../images/shareIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import './style/FoodInProgress.css';
 
 export default function FoodsInProgress() {
   const history = useHistory();
   const { id } = useParams();
-  const { btnLike, copySuccess, setCopySuccess } = useContext(MyContext);
+  const { isFav, setIsFav, copySuccess, setCopySuccess } = useContext(MyContext);
   const [foodDetail, setFoodDetail] = useState([]);
   // const [FoodsProgress, setFoodsProgress] = useState([]);
   const [paragraphy, setParagraphy] = useState([]);
+
+  function setingFavFalse() {
+    setIsFav(false);
+  }
+
+  function setingFavTrue() {
+    setIsFav(true);
+    localStorage.removeItem('favoriteRecipes');
+  }
+
+  function btnLike() {
+    return (
+      isFav ? (
+        <button
+          type="button"
+          className="btn-recipe"
+          onClick={ setingFavFalse }
+        >
+          <img
+            data-testid="favorite-btn"
+            alt="favorite"
+            src={ whiteHeartIcon }
+          />
+        </button>)
+        : (
+          <button
+            type="button"
+            className="btn-recipe"
+            onClick={ setingFavTrue }
+          >
+            <img
+              alt="favorite"
+              data-testid="favorite-btn"
+              src={ blackHeartIcon }
+            />
+          </button>)
+    );
+  }
 
   useEffect(() => {
     async function getId() {
@@ -23,9 +64,7 @@ export default function FoodsInProgress() {
         .filter((item) => item[0].includes('strMeasure'))
         .filter((item) => item[1] !== '' && item[1] !== ' ' && item[1] !== null)
         .map((item) => item[1]);
-        // || item[0].includes('strMeasure'));
       console.log('medidas', MeasureName);
-      console.log('ingredientes', ingredientsName);
       // const paragraph = {
       //   ingredientsName[index] :
       // };
@@ -56,13 +95,6 @@ export default function FoodsInProgress() {
           <h4 data-testid="recipe-title">
             {item.strMeal}
           </h4>
-          <img
-            src={ item.strMealThumb }
-            alt="ImageCard"
-            width="200px"
-            height="200px"
-            data-testid="recipe-photo"
-          />
           <button
             type="button"
             data-testid="share-btn"

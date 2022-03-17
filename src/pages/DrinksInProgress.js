@@ -2,15 +2,70 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import MyContext from '../context/MyContext';
 import { ApiDrinkById } from '../services/ApiDrinks';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 
 export default function DrinksInProgress() {
   const history = useHistory();
   const { id } = useParams();
-  const { btnLike, copySuccess, setCopySuccess } = useContext(MyContext);
+  const { copySuccess, setCopySuccess, isFav, setIsFav } = useContext(MyContext);
   const [drinkDetail, setDrinkDetail] = useState([]);
-  // const [FoodsProgress, setFoodsProgress] = useState([]);
+  // const [isChecked, setIsChecked] = useState(true);
+  // const [inputChecked, setInputChecked] = useState(false);
   const [paragraphy, setParagraphy] = useState([]);
+
+  function setingFavFalse() {
+    setIsFav(false);
+    const obj = { id,
+      type: typeOf,
+      nationality: food.strArea,
+      category: food.strCategory,
+      alcoholicOrNot: '',
+      name: food.strMeal,
+      image: food.strMealThumb };
+    // console.log(obj);
+    localStorage.setItem('favoriteRecipes', JSON.stringify([obj]));
+    const local = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    console.log(local[0].id);
+    // if(local[0].id === local[1].id) {
+    //   setIsFav(true);
+    // }
+  }
+
+  function setingFavTrue() {
+    setIsFav(true);
+    localStorage.removeItem('favoriteRecipes');
+  }
+
+  function btnLike() {
+    return (
+      isFav ? (
+        <button
+          type="button"
+          className="btn-recipe"
+          onClick={ setingFavFalse }
+        >
+          <img
+            data-testid="favorite-btn"
+            alt="favorite"
+            src={ whiteHeartIcon }
+          />
+        </button>)
+        : (
+          <button
+            type="button"
+            className="btn-recipe"
+            onClick={ setingFavTrue }
+          >
+            <img
+              alt="favorite"
+              data-testid="favorite-btn"
+              src={ blackHeartIcon }
+            />
+          </button>)
+    );
+  }
 
   useEffect(() => {
     async function getId() {
@@ -23,12 +78,8 @@ export default function DrinksInProgress() {
         .filter((item) => item[0].includes('strMeasure'))
         .filter((item) => item[1] !== '' && item[1] !== ' ' && item[1] !== null)
         .map((item) => item[1]);
-        // || item[0].includes('strMeasure'));
       console.log('medidas', MeasureName);
       console.log('ingredientes', ingredientsName);
-      // const paragraph = {
-      //   ingredientsName[index] :
-      // };
       setParagraphy(ingredientsName);
       // const obj = { meals: { [id]: paragraph } };
       // setFoodsProgress(obj);
@@ -37,14 +88,29 @@ export default function DrinksInProgress() {
     }
     getId();
   }, [id]);
+
   function copyingLink() {
     const doThis = async () => {
-      await navigator.clipboard.writeText(`http://localhost:3000/foods/${id}`);
+      await navigator.clipboard.writeText(`http://localhost:3000/drinks/${id}`);
       setCopySuccess(true);
       return copySuccess;
     };
     doThis();
   }
+
+  // function checkBoxFunc() {
+  //   const itemFromLS = JSON.parse(localStorage.getItem());
+  //   if(paragraphy.length === itemFromLS)
+  //   // console.log(target.checked);
+  //   // if (target.checked === true) {
+  //   //   setIsChecked(false);
+  //   // } else {
+  //   //   setIsChecked(true);
+  //   // }
+  //   // return isChecked;
+  // }
+  // console.log(paragraphy);
+
   return (
     <div>
       DrinksInProgress
@@ -89,6 +155,8 @@ export default function DrinksInProgress() {
                 {`${item[`strIngredient${index + 1}`]}
               : ${item[`strMeasure${index + 1}`]}` }
                 <input
+                  // onChange={ checkBoxFunc }
+                  // checked={ inputChecked }
                   type="checkbox"
                   value={ `${item[`strIngredient${index + 1}`]}
               : ${item[`strMeasure${index + 1}`]}` }
@@ -101,10 +169,12 @@ export default function DrinksInProgress() {
       <button
         type="button"
         data-testid="finish-recipe-btn"
+        // disabled={ isChecked }
         onClick={ () => history.push('/done-recipes') }
       >
         Finish Recipe
       </button>
+      {/* { btnFinishRecipe() } */}
     </div>
   );
 }
