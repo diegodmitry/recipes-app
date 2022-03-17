@@ -6,6 +6,7 @@ function Paragrafo({ iten, paragraphy }) {
   const [render, setRender] = useState(true);
   const history = useHistory();
   const { location: { pathname } } = history;
+
   useEffect(() => {
     function renderMethod() {
       if (pathname.includes('in-progress')) {
@@ -14,7 +15,7 @@ function Paragrafo({ iten, paragraphy }) {
     }
     renderMethod();
   }, [pathname]);
-  // console.log(iten);
+
   return (
     <div>
       {render ? ('') : null}
@@ -24,7 +25,6 @@ function Paragrafo({ iten, paragraphy }) {
           data-testid={ `${index}-ingredient-name-and-measure` }
         >
           {`${iten[`strIngredient${index + 1}`]}: ${iten[`strMeasure${index + 1}`]}`}
-          {/* {console.log(item)} */}
         </p>
       )) }
 

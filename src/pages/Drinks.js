@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import MyContext from '../context/MyContext';
 import { ApiDrinksName, ApiAllCategoryDrink, ApiByCategoryDrink }
 from '../services/ApiDrinks';
+import './style/Drinks.css';
 
 function Drinks() {
   const NUMBER_TWELVE = 12;
@@ -42,52 +43,55 @@ function Drinks() {
   return (
     <section>
       <Header />
-      <button
-        data-testid="All-category-filter"
-        name="All"
-        type="button"
-        onClick={ handleClick }
-      >
-        All
-      </button>
-      {drinkCategory
-        .map((item) => (
+      <div className="container">
+        <div className="categorys">
           <button
-            data-testid={ `${item.strCategory}-category-filter` }
-            name={ item.strCategory }
+            data-testid="All-category-filter"
+            className="category"
+            name="All"
             type="button"
             onClick={ handleClick }
-            key={ item.idDrink }
           >
-            { item.strCategory }
+            All
           </button>
-        ))}
-      <h1>Main screen drinks</h1>
-      {ingredients
-        .map((drink, index) => (
-          <div
-            className="card"
-            key={ drink.strDrink }
-            data-testid={ `${index}-recipe-card` }
-          >
-            <Link
-              to={ `/drinks/${drink.idDrink}` }
+          {drinkCategory
+            .map((item) => (
+              <button
+                data-testid={ `${item.strCategory}-category-filter` }
+                name={ item.strCategory }
+                type="button"
+                className="category"
+                onClick={ handleClick }
+                key={ item.idDrink }
+              >
+                { item.strCategory }
+              </button>
+            ))}
+        </div>
+        {ingredients
+          .map((drink, index) => (
+            <div
+              className="card"
+              key={ drink.strDrink }
+              data-testid={ `${index}-recipe-card` }
             >
-              <img
-                data-testid={ `${index}-card-img` }
-                src={ drink.strDrinkThumb }
-                alt="ImageCard"
-                width="200px"
-                height="200px"
-              />
-            </Link>
-            <p>
-              { drink.strCategory }
-            </p>
-            <h4 data-testid={ `${index}-card-name` }><b>{drink.strDrink}</b></h4>
-            <p>{ drink.strAlcoholic }</p>
-          </div>)) }
-      <Footer />
+              <h4 data-testid={ `${index}-card-name` }><b>{drink.strDrink}</b></h4>
+              <Link
+                to={ `/drinks/${drink.idDrink}` }
+              >
+                <img
+                  className="imgDrink"
+                  data-testid={ `${index}-card-img` }
+                  src={ drink.strDrinkThumb }
+                  alt="ImageCard"
+                />
+              </Link>
+              <p>
+                { drink.strCategory }
+              </p>
+            </div>)) }
+        <Footer />
+      </div>
     </section>
   );
 }

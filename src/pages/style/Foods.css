@@ -1,0 +1,31 @@
+.imgFood {
+  box-shadow: 6px 11px 13px 7px rgba(0, 0, 0, 0.79);
+  height: 300px;
+  width: 300px;
+}
+
+h4 {
+  color: #f7a100;
+}
+
+.categorys {
+  margin-top: 30px;
+  text-align: center;
+  width: 100%;
+}
+
+.category {
+  background: #f7a100;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline;
+  font-weight: 700;
+  margin: 8px;
+  padding: 10px 20px;
+}
+
+.category:hover {
+  background-color: #ff5100;
+  color: black;
+}

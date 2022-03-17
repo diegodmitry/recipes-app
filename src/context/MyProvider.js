@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import MyContext from './MyContext';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
 import { ApiMealsIngredient,
   ApiMealsName,
   ApiMealsFirstLetter,
+  ApiAllCategoryFood,
 } from '../services/ApiMeals';
 import { ApiIngredientsDrinks,
   ApiDrinksName,
@@ -20,7 +19,8 @@ function MyProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [drinkDetails, setDrinkDetails] = useState([]);
   const [drinkRecomended, setDrinkRecomended] = useState([]);
-  const [isFav, setIsFav] = useState(true);
+  const [isFav, setIsFav] = useState(false);
+  const [buttonChecked, setButtonChecked] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
   const [isStarted, setIsStarted] = useState(false);
   const NUMBER_SIX = 6;
@@ -29,7 +29,7 @@ function MyProvider({ children }) {
   const firstLetter = 'firstLetter';
   const stringName = 'name';
   const ingredientName = 'ingredients';
-  const { id } = useParams();
+  // const { id } = useParams();
 
   const history = useHistory();
   const { location: { pathname } } = history;
@@ -48,43 +48,6 @@ function MyProvider({ children }) {
     setIsStarted(true);
   }
 
-  function setingFavFalse() {
-    setIsFav(false);
-    const obj = { id };
-    localStorage.setItem('favoriteRecipes', JSON.stringify([obj]));
-  }
-
-  function setingFavTrue() {
-    setIsFav(true);
-    localStorage.removeItem('favoriteRecipes');
-  }
-
-  function btnLike() {
-    return (
-      isFav ? (
-        <button
-          type="button"
-          onClick={ setingFavFalse }
-        >
-          <img
-            data-testid="favorite-btn"
-            alt="favorite"
-            src={ whiteHeartIcon }
-          />
-        </button>)
-        : (
-          <button
-            type="button"
-            onClick={ setingFavTrue }
-          >
-            <img
-              alt="favorite"
-              data-testid="favorite-btn"
-              src={ blackHeartIcon }
-            />
-          </button>)
-    );
-  }
   async function handleCheckDrink() {
     const result = await ApiDrinksName(inputValue);
     if (result === null) {
@@ -97,6 +60,22 @@ function MyProvider({ children }) {
     if (result.length > NUMBER_ONE) {
       const filter = result.slice(0, NUMBER_TWELVE);
       return (setIngredients(filter));
+    }
+  }
+
+  async function handleCardBtn({ target }) {
+    if (
+      target.innerText === ''
+    || target.innerText === undefined
+    || target.innerText === null
+    ) {
+      const result = await ApiAllCategoryFood(target.alt);
+      const categoryFilter = result.slice(0, NUMBER_TWELVE);
+      setIngredients(categoryFilter);
+    } else {
+      const result = await ApiAllCategoryFood(target.innerText);
+      const categoryFilter = result.slice(0, NUMBER_TWELVE);
+      setIngredients(categoryFilter);
     }
   }
 
@@ -159,6 +138,11 @@ function MyProvider({ children }) {
   }
 
   const value = {
+    buttonChecked,
+    setButtonChecked,
+    handleCardBtn,
+    isFav,
+    setIsFav,
     isStarted,
     isStartedFunc,
     NUMBER_SIX,
@@ -168,7 +152,6 @@ function MyProvider({ children }) {
     setDrinkRecomended,
     copySuccess,
     setCopySuccess,
-    btnLike,
     ingredientSelect,
     nameSelect,
     firstLetterSelect,

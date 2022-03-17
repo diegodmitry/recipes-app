@@ -1,4 +1,4 @@
-.start_recipe_btn {
+.continue_btn {
   background: #f7a100;
   border: none;
   bottom: 0;
@@ -10,7 +10,7 @@
   width: 100%;
 }
 
-.start_recipe_btn:hover {
+.continue_btn:hover {
   background-color: #ff5100;
   color: black;
 }

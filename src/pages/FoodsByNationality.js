@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { ApiFoodNationality,
   ApiFoodNationalitySearch, ApiMealsName } from '../services/ApiMeals';
+import './style/Foods.css';
 
 function FoodsByNationality() {
   const NUMBER_TWELVE = 12;
@@ -39,51 +40,50 @@ function FoodsByNationality() {
   return (
     <div>
       <Header />
-      <h1>Foods by Nationality</h1>
-      <select
-        data-testid="explore-by-nationality-dropdown"
-        onChange={ getIdSearch }
-      >
-        {foodNationality
-          .map((item) => (
-            <option
-              value={ item.strArea }
-              key={ item.strArea }
-              data-testid={ `${item.strArea}-option` }
-            >
-              {item.strArea}
-            </option>
-
-          ))}
-        <option
-          value="All"
-          data-testid="All-option"
+      <div className="container">
+        <select
+          data-testid="explore-by-nationality-dropdown"
+          onChange={ getIdSearch }
         >
-          All
+          {foodNationality
+            .map((item) => (
+              <option
+                value={ item.strArea }
+                key={ item.strArea }
+                data-testid={ `${item.strArea}-option` }
+              >
+                {item.strArea}
+              </option>
 
-        </option>
-      </select>
-      {foodNationalitySearch.map((item, index) => (
-        <div
-          className="card"
-          key={ item.idMeal }
-          data-testid={ `${index}-recipe-card` }
-        >
-          <Link
-            to={ `/foods/${item.idMeal}` }
+            ))}
+          <option
+            value="All"
+            data-testid="All-option"
           >
-            <img
-              src={ item.strMealThumb }
-              alt="ImageCard"
-              width="200px"
-              height="200px"
-              data-testid={ `${index}-card-img` }
-            />
-          </Link>
-          <h4 data-testid={ `${index}-card-name` }>{item.strMeal}</h4>
-        </div>
-      ))}
-      <Footer />
+            All
+          </option>
+        </select>
+        {foodNationalitySearch.map((item, index) => (
+          <div
+            className="card"
+            key={ item.idMeal }
+            data-testid={ `${index}-recipe-card` }
+          >
+            <h4 data-testid={ `${index}-card-name` }>{item.strMeal}</h4>
+            <Link
+              to={ `/foods/${item.idMeal}` }
+            >
+              <img
+                src={ item.strMealThumb }
+                alt="ImageCard"
+                className="imgFood"
+                data-testid={ `${index}-card-img` }
+              />
+            </Link>
+          </div>
+        ))}
+        <Footer />
+      </div>
     </div>
   );
 }

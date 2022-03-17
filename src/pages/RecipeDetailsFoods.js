@@ -4,6 +4,8 @@ import MyContext from '../context/MyContext';
 import { ApiFoodById } from '../services/ApiMeals';
 import Paragrafo from '../components/Paragrafo';
 import { ApiDrinkRecomendation } from '../services/ApiDrinks';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 import './style/RecipeDetails.css';
 import './style/Recomend.css';
@@ -13,10 +15,15 @@ function RecipeDetailsFoods() {
   const history = useHistory();
   const [foodDetail, setFoodDetail] = useState([]);
   const [foodRecomend, setFoodRecomend] = useState([]);
-  const [isStarted, setIsStarted] = useState(false);
   const { id } = useParams();
-  const { btnLike, copySuccess, setCopySuccess } = useContext(MyContext);
+  const { copySuccess,
+    setCopySuccess,
+    isFav, setIsFav,
+    buttonChecked,
+    setButtonChecked,
+  } = useContext(MyContext);
   const [paragraphy, setParagraphy] = useState([]);
+  const FIVE = 5;
 
   useEffect(() => {
     async function getId() {
@@ -34,9 +41,24 @@ function RecipeDetailsFoods() {
       setFoodRecomend(filter);
       return setFoodRecomend(filter);
     }
+    if (JSON.parse(localStorage.getItem('inProgressRecipes')) !== null) {
+      if ((localStorage.getItem('inProgressRecipes')).includes(id)) {
+        setButtonChecked(true);
+      } else {
+        setButtonChecked(false);
+      }
+    }
+    if (JSON.parse(localStorage.getItem('favoriteRecipes')) !== null) {
+      if ((localStorage.getItem('favoriteRecipes')).includes(id)) {
+        setIsFav(true);
+      } else {
+        setIsFav(false);
+      }
+    }
     getId();
     getRecomendation();
-  }, [id]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, setButtonChecked]);
 
   function copyingLink() {
     const doThis = async () => {
@@ -48,9 +70,57 @@ function RecipeDetailsFoods() {
   }
 
   function isStartedFunc() {
-    localStorage.setItem('inProgressRecipes', JSON.stringify(true));
-    setIsStarted(true);
+    const obj = [{ meals: { [id]: paragraphy } }];
+    const obj1 = { meals: { [id]: paragraphy } };
+    if (JSON.parse(localStorage.getItem('inProgressRecipes')) !== null) {
+      const newObjt = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      const progressRecipes = [...newObjt, obj1];
+      localStorage.setItem('inProgressRecipes', JSON
+        .stringify(progressRecipes));
+    }
+    if (JSON.parse(localStorage.getItem('inProgressRecipes')) === null) {
+      localStorage.setItem('inProgressRecipes', JSON
+        .stringify(obj));
+    }
     history.push(`/foods/${id}/in-progress`);
+  }
+
+  function setingFavorite() {
+    const food = foodDetail[0];
+    const typeOf = history.location.pathname.slice(1, FIVE);
+    const obj = [{ id,
+      type: typeOf,
+      nationality: food.strArea,
+      category: food.strCategory,
+      alcoholicOrNot: '',
+      name: food.strMeal,
+      image: food.strMealThumb }];
+    const obj1 = { id,
+      type: typeOf,
+      nationality: food.strArea,
+      category: food.strCategory,
+      alcoholicOrNot: '',
+      name: food.strMeal,
+      image: food.strMealThumb };
+    setIsFav(true);
+    if (JSON.parse(localStorage.getItem('favoriteRecipes')) !== null) {
+      if ((localStorage.getItem('favoriteRecipes')).includes(id)) {
+        setIsFav(false);
+        const itemWillBeRemoved = JSON.parse(localStorage.getItem('favoriteRecipes'));
+        const testando = itemWillBeRemoved.filter((item) => item.id !== id);
+        localStorage.setItem('favoriteRecipes', JSON.stringify(testando));
+        return;
+      }
+      const newObjt = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const progressRecipes = [...newObjt, obj1];
+      localStorage.setItem('favoriteRecipes', JSON
+        .stringify(progressRecipes));
+    }
+    if (JSON.parse(localStorage.getItem('favoriteRecipes')) === null) {
+      // setIsFav(false);
+      localStorage.setItem('favoriteRecipes', JSON
+        .stringify(obj));
+    }
   }
 
   return (
@@ -60,9 +130,6 @@ function RecipeDetailsFoods() {
           className="card"
           key={ foods.idMeal }
         >
-          <h4 data-testid="recipe-title">
-            {foods.strMeal}
-          </h4>
           <img
             src={ foods.strMealThumb }
             alt="ImageCard"
@@ -70,8 +137,24 @@ function RecipeDetailsFoods() {
             height="200px"
             data-testid="recipe-photo"
           />
+          <h4 data-testid="recipe-title">
+            {foods.strMeal}
+          </h4>
+          {/* { btnLike() } */}
           <button
             type="button"
+            className="btn-recipe"
+            onClick={ setingFavorite }
+          >
+            <img
+              alt="favorite"
+              data-testid="favorite-btn"
+              src={ isFav ? blackHeartIcon : whiteHeartIcon }
+            />
+          </button>
+          <button
+            type="button"
+            className="btn-recipe"
             data-testid="share-btn"
             onClick={ () => copyingLink() }
           >
@@ -80,63 +163,56 @@ function RecipeDetailsFoods() {
               src={ shareIcon }
             />
           </button>
-          { btnLike() }
           { copySuccess && <span>Link copied!</span>}
           <p data-testid="recipe-category">{ foods.strCategory }</p>
-          <p data-testid="instructions">
-            { foods.strInstructions }
-          </p>
+          <div>
+            <h4>Instructions</h4>
+            <p data-testid="instructions">
+              { foods.strInstructions }
+            </p>
+          </div>
           <iframe title="video" data-testid="video" src="">VIdeo</iframe>
+          <div>
+            <h4>ingredients</h4>
+            <Paragrafo iten={ foods } paragraphy={ paragraphy } />
+          </div>
           <div
             className="containerRecomend"
           >
-            <p>
+            <h4>
               Receitas recomendadas
-            </p>
+            </h4>
             <div className="cardRecomend">
               {foodRecomend
-                .map((food, ind) => (
+                .map((item, ind) => (
                   <div
                     className="cardRecomend2"
-                    key={ food.idDrink }
+                    key={ item.idDrink }
                     data-testid={ `${ind}-recomendation-card` }
                   >
                     <Link
-                      to={ `/drinks/${food.idDrink}` }
+                      to={ `/drinks/${item.idDrink}` }
                     >
                       <img
-                        src={ food.strDrinkThumb }
+                        src={ item.strDrinkThumb }
                         alt="ImageCard"
-                        width="100px"
+                        className="recomendImg"
                         data-testid={ `${ind}-card-img` }
                       />
                     </Link>
-                    <h4 data-testid={ `${ind}-recomendation-title` }>{food.strDrink}</h4>
+                    <h5 data-testid={ `${ind}-recomendation-title` }>{item.strDrink}</h5>
                   </div>
 
                 )) }
             </div>
           </div>
-          <div>
-            ingredients
-            <Paragrafo iten={ foods } paragraphy={ paragraphy } />
-          </div>
-          {// com isso deu certo o paragrafo de forma dinãmica...fiz assim:
-          // peguei const ingredientsName = Object.entries(result[0]), que haviamos feito no foodsInProgress
-          // então logicamente as quantidades serão as mesmas dos ingredientes ,
-          // então peguei somente um Object.entries, só para servir de parametro em relação ao tamanho ou seja...
-          // renderizar quantidades de paragrafos de acordo com o tamanho de seu length.
-          // então armazenei o ingredientsName assim: setParagraphy(ingredientsName)
-          // depois então passei como props para o component <Paragrafo >,o paragraphy
-          //  usando o index do paragraphy ,ou seja , seu tamanho.
-          }
           <button
             type="button"
             data-testid="start-recipe-btn"
             onClick={ isStartedFunc }
             className="start_recipe_btn"
           >
-            { isStarted ? 'Continue Recipe' : 'Start Recipe' }
+            { buttonChecked ? 'Continue Recipe' : 'Start Recipe' }
           </button>
         </div>
       ))}

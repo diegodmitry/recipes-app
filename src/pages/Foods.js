@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import MyContext from '../context/MyContext';
 import { ApiMealsName, ApiCategoryFood, ApiAllCategoryFood } from '../services/ApiMeals';
+import './style/Foods.css';
 
 function Foods() {
   const NUMBER_TWELVE = 12;
@@ -11,6 +12,7 @@ function Foods() {
   const { ingredients, setIngredients } = useContext(MyContext);
   const [foodCategory, setFoodCategory] = useState([]);
   const [currentFilter, setCurrentFilter] = useState('');
+
   useEffect(() => {
     async function getCategoryFood() {
       const result = await ApiCategoryFood();
@@ -22,8 +24,10 @@ function Foods() {
       const filter = result.slice(0, NUMBER_TWELVE);
       setIngredients(filter);
     }
+
     initialFetch();
     getCategoryFood();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setIngredients]);
 
   async function handleClick({ target }) {
@@ -37,49 +41,55 @@ function Foods() {
     setCurrentFilter(target.name);
     return setIngredients(categoryFilter);
   }
+
   return (
     <section>
       <Header />
-      <button
-        data-testid="All-category-filter"
-        name="All"
-        type="button"
-        onClick={ handleClick }
-      >
-        All
-      </button>
-      {foodCategory
-        .map((item) => (
+      <div className="container">
+        <div className="categorys">
           <button
-            key={ item.strCategory }
+            data-testid="All-category-filter"
+            className="category"
+            name="All"
             type="button"
-            name={ item.strCategory }
-            data-testid={ `${item.strCategory}-category-filter` }
             onClick={ handleClick }
           >
-            { item.strCategory }
-          </button>))}
-      {ingredients
-        .map((food, index) => (
-          <div
-            className="card"
-            key={ food.idMeal }
-            data-testid={ `${index}-recipe-card` }
-          >
-            <Link
-              to={ `/foods/${food.idMeal}` }
+            All
+          </button>
+          {foodCategory
+            .map((item) => (
+              <button
+                key={ item.strCategory }
+                type="button"
+                name={ item.strCategory }
+                className="category"
+                data-testid={ `${item.strCategory}-category-filter` }
+                onClick={ handleClick }
+              >
+                { item.strCategory }
+              </button>))}
+        </div>
+        {ingredients
+          .map((food, index) => (
+            <div
+              className="card"
+              key={ food.idMeal }
+              data-testid={ `${index}-recipe-card` }
             >
-              <img
-                src={ food.strMealThumb }
-                alt="ImageCard"
-                width="200px"
-                height="200px"
-                data-testid={ `${index}-card-img` }
-              />
-            </Link>
-            <h4 data-testid={ `${index}-card-name` }>{food.strMeal}</h4>
-          </div>)) }
-      <Footer />
+              <h4 data-testid={ `${index}-card-name` }>{food.strMeal}</h4>
+              <Link
+                to={ `/foods/${food.idMeal}` }
+              >
+                <img
+                  src={ food.strMealThumb }
+                  alt="ImageCard"
+                  className="imgFood"
+                  data-testid={ `${index}-card-img` }
+                />
+              </Link>
+            </div>)) }
+        <Footer />
+      </div>
     </section>
   );
 }
