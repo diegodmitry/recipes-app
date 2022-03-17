@@ -38,7 +38,6 @@ function Foods() {
     }
     const result = await ApiAllCategoryFood(target.name);
     const categoryFilter = result.slice(0, NUMBER_TWELVE);
-    console.log('teste', categoryFilter);
     setCurrentFilter(target.name);
     return setIngredients(categoryFilter);
   }

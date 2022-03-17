@@ -15,7 +15,6 @@ function Paragrafo({ iten, paragraphy }) {
     }
     renderMethod();
   }, [pathname]);
-  // console.log(iten);
 
   return (
     <div>
@@ -26,7 +25,6 @@ function Paragrafo({ iten, paragraphy }) {
           data-testid={ `${index}-ingredient-name-and-measure` }
         >
           {`${iten[`strIngredient${index + 1}`]}: ${iten[`strMeasure${index + 1}`]}`}
-          {/* {console.log(item)} */}
         </p>
       )) }
 

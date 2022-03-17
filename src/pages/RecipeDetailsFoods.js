@@ -57,7 +57,8 @@ function RecipeDetailsFoods() {
     }
     getId();
     getRecomendation();
-  }, [id, setButtonChecked, setIsFav]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, setButtonChecked]);
 
   function copyingLink() {
     const doThis = async () => {
@@ -116,6 +117,7 @@ function RecipeDetailsFoods() {
         .stringify(progressRecipes));
     }
     if (JSON.parse(localStorage.getItem('favoriteRecipes')) === null) {
+      // setIsFav(false);
       localStorage.setItem('favoriteRecipes', JSON
         .stringify(obj));
     }

@@ -9,56 +9,52 @@ import shareIcon from '../images/shareIcon.svg';
 export default function DrinksInProgress() {
   const history = useHistory();
   const { id } = useParams();
+  const SIX = 6;
   const { copySuccess, setCopySuccess, isFav, setIsFav } = useContext(MyContext);
   const [drinkDetail, setDrinkDetail] = useState([]);
   const [paragraphy, setParagraphy] = useState([]);
 
-  function setingFavFalse() {
-    setIsFav(false);
-    const obj = { id,
+  function setingFavorite() {
+    const drink = drinkDetail[0];
+    const typeOf = history.location.pathname.slice(1, SIX);
+    const obj = [{
+      id,
       type: typeOf,
-      nationality: food.strArea,
-      category: food.strCategory,
-      alcoholicOrNot: '',
-      name: food.strMeal,
-      image: food.strMealThumb };
-    localStorage.setItem('favoriteRecipes', JSON.stringify([obj]));
-    const local = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    console.log(local[0].id);
-  }
-
-  function setingFavTrue() {
+      nationality: '',
+      category: drink.strCategory,
+      alcoholicOrNot: drink.strAlcoholic,
+      name: drink.strDrink,
+      image: drink.strDrinkThumb,
+    }];
+    const obj1 = {
+      id,
+      type: typeOf,
+      nationality: '',
+      category: drink.strCategory,
+      alcoholicOrNot: drink.strAlcoholic,
+      name: drink.strDrink,
+      image: drink.strDrinkThumb,
+    };
     setIsFav(true);
-    localStorage.removeItem('favoriteRecipes');
-  }
-
-  function btnLike() {
-    return (
-      isFav ? (
-        <button
-          type="button"
-          className="btn-recipe"
-          onClick={ setingFavFalse }
-        >
-          <img
-            data-testid="favorite-btn"
-            alt="favorite"
-            src={ whiteHeartIcon }
-          />
-        </button>)
-        : (
-          <button
-            type="button"
-            className="btn-recipe"
-            onClick={ setingFavTrue }
-          >
-            <img
-              alt="favorite"
-              data-testid="favorite-btn"
-              src={ blackHeartIcon }
-            />
-          </button>)
-    );
+    if (JSON.parse(localStorage.getItem('favoriteRecipes')) !== null
+    ) {
+      if ((localStorage.getItem('favoriteRecipes')).includes(id)) {
+        setIsFav(false);
+        const itemWillBeRemoved = JSON.parse(localStorage.getItem('favoriteRecipes'));
+        const testando = itemWillBeRemoved.filter((item) => item.id !== id);
+        localStorage.setItem('favoriteRecipes', JSON.stringify(testando));
+        return;
+      }
+      const newObjt = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const progressRecipes = [...newObjt, obj1];
+      localStorage.setItem('favoriteRecipes', JSON
+        .stringify(progressRecipes));
+    }
+    if (JSON.parse(localStorage.getItem('favoriteRecipes')) === null
+    ) {
+      localStorage.setItem('favoriteRecipes', JSON
+        .stringify(obj));
+    }
   }
 
   useEffect(() => {
@@ -80,8 +76,15 @@ export default function DrinksInProgress() {
       // localStorage.setItem('inProgressRecipes', JSON.stringify(FoodsProgress));
       setDrinkDetail(result);
     }
+    if (JSON.parse(localStorage.getItem('favoriteRecipes')) !== null) {
+      if ((localStorage.getItem('favoriteRecipes')).includes(id)) {
+        setIsFav(true);
+      } else {
+        setIsFav(false);
+      }
+    }
     getId();
-  }, [id]);
+  }, [id, setIsFav]);
 
   function copyingLink() {
     const doThis = async () => {
@@ -133,7 +136,17 @@ export default function DrinksInProgress() {
               src={ shareIcon }
             />
           </button>
-          { btnLike() }
+          <button
+            type="button"
+            className="btn-recipe"
+            onClick={ setingFavorite }
+          >
+            <img
+              alt="favorite"
+              data-testid="favorite-btn"
+              src={ isFav ? blackHeartIcon : whiteHeartIcon }
+            />
+          </button>
           { copySuccess && <span>Link copied!</span>}
           <p data-testid="recipe-category">{ item.strCategory }</p>
           <p data-testid="recipe-category">{ item.strAlcoholic }</p>
@@ -168,7 +181,6 @@ export default function DrinksInProgress() {
       >
         Finish Recipe
       </button>
-      {/* { btnFinishRecipe() } */}
     </div>
   );
 }

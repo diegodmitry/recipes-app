@@ -14,45 +14,7 @@ export default function FoodsInProgress() {
   const [foodDetail, setFoodDetail] = useState([]);
   // const [FoodsProgress, setFoodsProgress] = useState([]);
   const [paragraphy, setParagraphy] = useState([]);
-
-  function setingFavFalse() {
-    setIsFav(false);
-  }
-
-  function setingFavTrue() {
-    setIsFav(true);
-    localStorage.removeItem('favoriteRecipes');
-  }
-
-  function btnLike() {
-    return (
-      isFav ? (
-        <button
-          type="button"
-          className="btn-recipe"
-          onClick={ setingFavFalse }
-        >
-          <img
-            data-testid="favorite-btn"
-            alt="favorite"
-            src={ whiteHeartIcon }
-          />
-        </button>)
-        : (
-          <button
-            type="button"
-            className="btn-recipe"
-            onClick={ setingFavTrue }
-          >
-            <img
-              alt="favorite"
-              data-testid="favorite-btn"
-              src={ blackHeartIcon }
-            />
-          </button>)
-    );
-  }
-
+  const FIVE = 5;
   useEffect(() => {
     async function getId() {
       const result = await ApiFoodById(id);
@@ -74,8 +36,16 @@ export default function FoodsInProgress() {
       // localStorage.setItem('inProgressRecipes', JSON.stringify(FoodsProgress));
       setFoodDetail(result);
     }
+    if (JSON.parse(localStorage.getItem('favoriteRecipes')) !== null) {
+      if ((localStorage.getItem('favoriteRecipes')).includes(id)) {
+        setIsFav(true);
+      } else {
+        setIsFav(false);
+      }
+    }
     getId();
-  }, [id]);
+  }, [id, setIsFav]);
+
   function copyingLink() {
     const doThis = async () => {
       await navigator.clipboard.writeText(`http://localhost:3000/foods/${id}`);
@@ -83,6 +53,44 @@ export default function FoodsInProgress() {
       return copySuccess;
     };
     doThis();
+  }
+
+  function setingFavorite() {
+    const food = foodDetail[0];
+    const typeOf = history.location.pathname.slice(1, FIVE);
+    const obj = [{ id,
+      type: typeOf,
+      nationality: food.strArea,
+      category: food.strCategory,
+      alcoholicOrNot: '',
+      name: food.strMeal,
+      image: food.strMealThumb }];
+    const obj1 = { id,
+      type: typeOf,
+      nationality: food.strArea,
+      category: food.strCategory,
+      alcoholicOrNot: '',
+      name: food.strMeal,
+      image: food.strMealThumb };
+    setIsFav(true);
+    if (JSON.parse(localStorage.getItem('favoriteRecipes')) !== null) {
+      if ((localStorage.getItem('favoriteRecipes')).includes(id)) {
+        setIsFav(false);
+        const itemWillBeRemoved = JSON.parse(localStorage.getItem('favoriteRecipes'));
+        const testando = itemWillBeRemoved.filter((item) => item.id !== id);
+        localStorage.setItem('favoriteRecipes', JSON.stringify(testando));
+        return;
+      }
+      const newObjt = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const progressRecipes = [...newObjt, obj1];
+      localStorage.setItem('favoriteRecipes', JSON
+        .stringify(progressRecipes));
+    }
+    if (JSON.parse(localStorage.getItem('favoriteRecipes')) === null) {
+      // setIsFav(false);
+      localStorage.setItem('favoriteRecipes', JSON
+        .stringify(obj));
+    }
   }
   return (
     <div className="container-recipes">
@@ -100,7 +108,17 @@ export default function FoodsInProgress() {
           <h4 data-testid="recipe-title">
             {item.strMeal}
           </h4>
-          { btnLike() }
+          <button
+            type="button"
+            className="btn-recipe"
+            onClick={ setingFavorite }
+          >
+            <img
+              alt="favorite"
+              data-testid="favorite-btn"
+              src={ isFav ? blackHeartIcon : whiteHeartIcon }
+            />
+          </button>
           <button
             type="button"
             className="btn-recipe"
