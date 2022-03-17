@@ -11,8 +11,6 @@ export default function DrinksInProgress() {
   const { id } = useParams();
   const { copySuccess, setCopySuccess, isFav, setIsFav } = useContext(MyContext);
   const [drinkDetail, setDrinkDetail] = useState([]);
-  // const [isChecked, setIsChecked] = useState(true);
-  // const [inputChecked, setInputChecked] = useState(false);
   const [paragraphy, setParagraphy] = useState([]);
 
   function setingFavFalse() {
@@ -24,13 +22,9 @@ export default function DrinksInProgress() {
       alcoholicOrNot: '',
       name: food.strMeal,
       image: food.strMealThumb };
-    // console.log(obj);
     localStorage.setItem('favoriteRecipes', JSON.stringify([obj]));
     const local = JSON.parse(localStorage.getItem('favoriteRecipes'));
     console.log(local[0].id);
-    // if(local[0].id === local[1].id) {
-    //   setIsFav(true);
-    // }
   }
 
   function setingFavTrue() {

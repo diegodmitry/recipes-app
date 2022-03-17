@@ -9,7 +9,7 @@ import './style/Foods.css';
 function Foods() {
   const NUMBER_TWELVE = 12;
   const NUMBER_FIVE = 5;
-  const { ingredients, setIngredients, handleCardBtn } = useContext(MyContext);
+  const { ingredients, setIngredients } = useContext(MyContext);
   const [foodCategory, setFoodCategory] = useState([]);
   const [currentFilter, setCurrentFilter] = useState('');
 
@@ -27,7 +27,6 @@ function Foods() {
 
     initialFetch();
     getCategoryFood();
-    handleCardBtn();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setIngredients]);
 

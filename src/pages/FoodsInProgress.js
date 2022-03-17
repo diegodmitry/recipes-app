@@ -5,7 +5,7 @@ import { ApiFoodById } from '../services/ApiMeals';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
-import './style/FoodInProgress.css';
+import './style/InProgress.css';
 
 export default function FoodsInProgress() {
   const history = useHistory();
@@ -85,18 +85,25 @@ export default function FoodsInProgress() {
     doThis();
   }
   return (
-    <div>
+    <div className="container-recipes">
       {foodDetail.map((item) => (
         <div
           className="card"
           key={ item.idMeal }
         >
-          <img src={ item.strMealThumb } alt="ImageCard" data-testid="recipe-photo" />
+          <img
+            src={ item.strMealThumb }
+            alt="ImageCard"
+            data-testid="recipe-photo"
+            className="imgFood"
+          />
           <h4 data-testid="recipe-title">
             {item.strMeal}
           </h4>
+          { btnLike() }
           <button
             type="button"
+            className="btn-recipe"
             data-testid="share-btn"
             onClick={ () => copyingLink() }
           >
@@ -105,7 +112,6 @@ export default function FoodsInProgress() {
               src={ shareIcon }
             />
           </button>
-          { btnLike() }
           { copySuccess && <span>Link copied!</span>}
           <p data-testid="recipe-category">{ item.strCategory }</p>
           <p data-testid="instructions">
@@ -131,6 +137,7 @@ export default function FoodsInProgress() {
       <button
         type="button"
         data-testid="finish-recipe-btn"
+        className="continue_btn"
         onClick={ () => history.push('/done-recipes') }
       >
         Finish Recipe

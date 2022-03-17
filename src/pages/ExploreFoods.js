@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { useParams } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { ApiFoodSurprise } from '../services/ApiMeals';
+import './style/ExplorePrincipal.css';
 
 function ExploreFoods({ history }) {
   async function supriseFoodBtn() {
@@ -14,28 +14,33 @@ function ExploreFoods({ history }) {
   return (
     <section>
       <Header />
-      <button
-        type="button"
-        data-testid="explore-by-ingredient"
-        onClick={ () => history.push('/explore/foods/ingredients') }
-      >
-        By Ingredient
-      </button>
-      <button
-        type="button"
-        data-testid="explore-by-nationality"
-        onClick={ () => history.push('/explore/foods/nationalities') }
-      >
-        By Nationality
-      </button>
-      <button
-        type="button"
-        data-testid="explore-surprise"
-        onClick={ supriseFoodBtn }
-      >
-        Surprise me!
-      </button>
-      <Footer />
+      <div className="container-explorer">
+        <button
+          type="button"
+          className="btn-explorer"
+          data-testid="explore-by-ingredient"
+          onClick={ () => history.push('/explore/foods/ingredients') }
+        >
+          By Ingredient
+        </button>
+        <button
+          type="button"
+          className="btn-explorer"
+          data-testid="explore-by-nationality"
+          onClick={ () => history.push('/explore/foods/nationalities') }
+        >
+          By Nationality
+        </button>
+        <button
+          type="button"
+          className="btn-explorer"
+          data-testid="explore-surprise"
+          onClick={ supriseFoodBtn }
+        >
+          Surprise me!
+        </button>
+        <Footer />
+      </div>
     </section>
   );
 }

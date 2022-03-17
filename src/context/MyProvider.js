@@ -19,7 +19,7 @@ function MyProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [drinkDetails, setDrinkDetails] = useState([]);
   const [drinkRecomended, setDrinkRecomended] = useState([]);
-  const [isFav, setIsFav] = useState(true);
+  const [isFav, setIsFav] = useState(false);
   const [buttonChecked, setButtonChecked] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
   const [isStarted, setIsStarted] = useState(false);
@@ -63,17 +63,17 @@ function MyProvider({ children }) {
     }
   }
 
-  async function handleCardBtn(e) {
+  async function handleCardBtn({ target }) {
     if (
-      e.target.innerText === ''
-    || e.target.innerText === undefined
-    || e.target.innerText === null
+      target.innerText === ''
+    || target.innerText === undefined
+    || target.innerText === null
     ) {
-      const result = await ApiAllCategoryFood(e.target.alt);
+      const result = await ApiAllCategoryFood(target.alt);
       const categoryFilter = result.slice(0, NUMBER_TWELVE);
       setIngredients(categoryFilter);
     } else {
-      const result = await ApiAllCategoryFood(e.target.innerText);
+      const result = await ApiAllCategoryFood(target.innerText);
       const categoryFilter = result.slice(0, NUMBER_TWELVE);
       setIngredients(categoryFilter);
     }

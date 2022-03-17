@@ -25,6 +25,7 @@ function RecipeDetailsDrinks() {
     setButtonChecked,
     NUMBER_SIX,
   } = useContext(MyContext);
+  const SIX = 6;
   const { id } = useParams();
   const [paragraphy, setParagraphy] = useState([]);
 
@@ -51,10 +52,16 @@ function RecipeDetailsDrinks() {
         setButtonChecked(false);
       }
     }
+    if (JSON.parse(localStorage.getItem('favoriteRecipes')) !== null) {
+      if ((localStorage.getItem('favoriteRecipes')).includes(id)) {
+        setIsFav(true);
+      } else {
+        setIsFav(false);
+      }
+    }
     getId();
     getRecomendation();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, NUMBER_SIX, setDrinkDetails, setDrinkRecomended]);
+  }, [id, NUMBER_SIX, setDrinkDetails, setDrinkRecomended, setButtonChecked, setIsFav]);
 
   function copyingLink() {
     const doThis = async () => {
@@ -66,8 +73,8 @@ function RecipeDetailsDrinks() {
   }
 
   function isStartedFunc() {
-    const obj = [{ meals: { [id]: paragraphy } }];
-    const obj1 = { meals: { [id]: paragraphy } };
+    const obj = [{ cocktails: { [id]: paragraphy } }];
+    const obj1 = { cocktails: { [id]: paragraphy } };
     if (JSON.parse(localStorage.getItem('inProgressRecipes')) !== null) {
       const newObjt = JSON.parse(localStorage.getItem('inProgressRecipes'));
       const progressRecipes = [...newObjt, obj1];
@@ -81,42 +88,47 @@ function RecipeDetailsDrinks() {
     history.push(`/drinks/${id}/in-progress`);
   }
 
-  function setingFavFalse() {
-    setIsFav(false);
-  }
-
-  function setingFavTrue() {
+  function setingFavorite() {
+    const drink = drinkDetails[0];
+    const typeOf = history.location.pathname.slice(1, SIX);
+    const obj = [{
+      id,
+      type: typeOf,
+      nationality: '',
+      category: drink.strCategory,
+      alcoholicOrNot: drink.strAlcoholic,
+      name: drink.strDrink,
+      image: drink.strDrinkThumb,
+    }];
+    const obj1 = {
+      id,
+      type: typeOf,
+      nationality: '',
+      category: drink.strCategory,
+      alcoholicOrNot: drink.strAlcoholic,
+      name: drink.strDrink,
+      image: drink.strDrinkThumb,
+    };
     setIsFav(true);
-    localStorage.removeItem('favoriteRecipes');
-  }
-
-  function btnLike() {
-    return (
-      isFav ? (
-        <button
-          type="button"
-          className="btn-recipe"
-          onClick={ setingFavFalse }
-        >
-          <img
-            data-testid="favorite-btn"
-            alt="favorite"
-            src={ whiteHeartIcon }
-          />
-        </button>)
-        : (
-          <button
-            type="button"
-            className="btn-recipe"
-            onClick={ setingFavTrue }
-          >
-            <img
-              alt="favorite"
-              data-testid="favorite-btn"
-              src={ blackHeartIcon }
-            />
-          </button>)
-    );
+    if (JSON.parse(localStorage.getItem('favoriteRecipes')) !== null
+    ) {
+      if ((localStorage.getItem('favoriteRecipes')).includes(id)) {
+        setIsFav(false);
+        const itemWillBeRemoved = JSON.parse(localStorage.getItem('favoriteRecipes'));
+        const testando = itemWillBeRemoved.filter((item) => item.id !== id);
+        localStorage.setItem('favoriteRecipes', JSON.stringify(testando));
+        return;
+      }
+      const newObjt = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const progressRecipes = [...newObjt, obj1];
+      localStorage.setItem('favoriteRecipes', JSON
+        .stringify(progressRecipes));
+    }
+    if (JSON.parse(localStorage.getItem('favoriteRecipes')) === null
+    ) {
+      localStorage.setItem('favoriteRecipes', JSON
+        .stringify(obj));
+    }
   }
 
   return (
@@ -136,7 +148,17 @@ function RecipeDetailsDrinks() {
           <h4 data-testid="recipe-title">
             {item.strDrink}
           </h4>
-          { btnLike() }
+          <button
+            type="button"
+            className="btn-recipe"
+            onClick={ setingFavorite }
+          >
+            <img
+              alt="favorite"
+              data-testid="favorite-btn"
+              src={ isFav ? blackHeartIcon : whiteHeartIcon }
+            />
+          </button>
           <button
             type="button"
             className="btn-recipe"
