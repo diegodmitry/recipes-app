@@ -25,4 +25,7 @@ npm install
   ```
 
 ## Equipe
-Diego, Arthur, Toin, Mena
+Diego: https://github.com/diegodmitry, 
+Arthur: https://github.com/Arthur-Santinati,
+Antonio: https://github.com/Toineto,
+Mena: 
