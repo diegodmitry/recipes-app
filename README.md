@@ -1,4 +1,4 @@
-q# Recipes App Project
+# Recipes App Project
 
 # Contexto
 O objetivo do projeto é abordar um “livro de receitas”, mas em forma de aplicativo, nele você faz o seu login, e assim que entra procura pela receita da sua escolha, podendo usar filtros, tanto como bebidas, como comidas, e tendo opções de explorar várias receitas que talvez você não conheça.
